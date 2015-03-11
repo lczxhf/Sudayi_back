@@ -1,0 +1,26 @@
+class Order
+  include Mongoid::Document
+  include Mongoid::Timestamps # adds created_at and updated_at fields
+  belongs_to :cart
+  belongs_to :courier_account
+  belongs_to :customer_account
+   belongs_to :node
+   belongs_to :store
+   belongs_to :courier_employee
+   has_one :order_time
+   field :number,:type=>String
+  field :firstnode,:type=>String
+  field :price, :type => Float
+  field :iscomplete,:type=>Boolean,:default=>false
+  field :isnow,:type=>Boolean,:default=>false
+  field :usetime,:type=>Integer,:default=>''
+  field :level,:type=>Integer
+  # field <name>, :type => <type>, :default => <value>
+  
+
+  # You can define indexes on documents using the index macro:
+  # index :field <, :unique => true>
+
+  # You can create a composite key in mongoid to replace the default id using the key macro:
+  # key :field <, :another_field, :one_more ....>
+end
