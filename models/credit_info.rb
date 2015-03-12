@@ -4,6 +4,7 @@ class CreditInfo
   belongs_to :address
   belongs_to :state
   belongs_to :supplier_account
+  belongs_to :courier_account
   # field <name>, :type => <type>, :default => <value>
   field :name, :type => String
   field :email, :type => String

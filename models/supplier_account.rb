@@ -11,6 +11,7 @@ class SupplierAccount
   field :email,:type=>String
   field :mobile,:type=>String
   field :level,:type=>Integer
+  field :method_cooperation,:type=>String
   field :account_id,:type=>String
 
   # You can define indexes on documents using the index macro:

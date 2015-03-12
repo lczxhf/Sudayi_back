@@ -4,7 +4,7 @@ class StoreEmployee
   belongs_to :supplier_account
   
   # field <name>, :type => <type>, :default => <value>
-  
+  field :is_work,:type=>Boolean
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

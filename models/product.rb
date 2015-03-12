@@ -7,12 +7,13 @@ class Product
   belongs_to :pay_type
   belongs_to :category
   has_many :image_items
-  has_many :product_collections
+  has_many :product_details
+  has_many :customer_services
   # field <name>, :type => <type>, :default => <value>
    field :name, :type => String
   field :description, :type => String
   field :level,  :type => Integer
-
+  field :is_bring_three,:type=>Boolean
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

@@ -1,10 +1,10 @@
-class Detail
+class Friend
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  
+  belongs_to :customer_account
   # field <name>, :type => <type>, :default => <value>
-  field :name,:type=>String
-
+  field :to_customer,:type=>String
+  field :is_delete,:type=>Boolean
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

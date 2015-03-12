@@ -1,9 +1,12 @@
-class Detail
+class Category
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  
+  belongs_to :category
+  has_many :categories
+  belongs_to :supplier_account
   # field <name>, :type => <type>, :default => <value>
   field :name,:type=>String
+  field :code,:type=>String
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

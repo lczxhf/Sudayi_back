@@ -1,23 +1,19 @@
 class Order
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :cart
-  belongs_to :courier_account
-  belongs_to :customer_account
-   belongs_to :node
-   belongs_to :store
-   belongs_to :courier_employee
-   has_one :order_time
-   field :number,:type=>String
-  field :firstnode,:type=>String
-  field :price, :type => Float
+  belongs_to :courier_order
+  belongs_to :error_info
+  belongs_to :pay_type 
+  # field <name>, :type => <type>, :default => <value>
   field :iscomplete,:type=>Boolean,:default=>false
   field :isnow,:type=>Boolean,:default=>false
   field :usetime,:type=>Integer,:default=>''
   field :level,:type=>Integer
-  # field <name>, :type => <type>, :default => <value>
-  
-
+  field :order_type,:type=>String
+  field :product_detail,:type=>Array
+  field :sum,:type=>Array
+  field :first_node,:type=>String
+  field :end_node,:type=>String
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

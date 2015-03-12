@@ -15,6 +15,7 @@ class Store
   field :open_time_in_one_week, :type=> String
   field :credit_url, :type => String
   field :manager_id,:type=>String
+  field :is_open,:type=>Boolean
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

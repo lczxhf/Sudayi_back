@@ -2,12 +2,10 @@ class ProductCollection
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
   belongs_to :product
+  has_many :customer_account
   # field <name>, :type => <type>, :default => <value>
-   field :specification,:type=>String
-   field :price, :type => Float
-   field :storage, :type => Integer
-   field :no_store,:type=>Integer
-   field :is_rec,:type=>Boolean
+   field :message,:type=>String
+  
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

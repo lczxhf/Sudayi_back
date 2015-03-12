@@ -1,7 +1,7 @@
 class OrderTime
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :order
+  belongs_to :courier_order
   # field <name>, :type => <type>, :default => <value>
    field :store_time,:type=>DateTime
     field :interval_time,:type=>DateTime

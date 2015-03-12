@@ -9,7 +9,7 @@ class CustomerAccount
    field :level,:type=>Integer
    field :mobile,:type=>String
    field :email,:type=>String
-   
+   field :other_address,:type=>Array
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

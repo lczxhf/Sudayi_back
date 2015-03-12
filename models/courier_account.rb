@@ -5,6 +5,7 @@ class CourierAccount
   has_one :firm_info
   has_many :courier_employees
   has_one :order_setting
+  has_one :courier_website
   # field <name>, :type => <type>, :default => <value>
   field :user_name,:type=>String
   field :crypted_password,:type=>String

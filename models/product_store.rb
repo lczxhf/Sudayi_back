@@ -1,7 +1,7 @@
 class ProductStore
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :product_collection
+  belongs_to :product_detail
   belongs_to :store
   # field <name>, :type => <type>, :default => <value>
   field :amount,:type=>Integer

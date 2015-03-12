@@ -5,8 +5,8 @@ class ImageItem
   # field <name>, :type => <type>, :default => <value>
    field :name, :type => String
    field :url, :type => String
-   field :isdetail, :type => Integer
-   field :iscover, :type => Integer
+   field :isdetail, :type => Boolean
+   field :iscover, :type => Boolean
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 
