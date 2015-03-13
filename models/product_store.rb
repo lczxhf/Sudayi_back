@@ -1,14 +1,12 @@
 class ProductStore
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :product_detail
-  belongs_to :store
-  # field <name>, :type => <type>, :default => <value>
-  field :amount,:type=>Integer
+  include Mongoid::Timestamps 
+  #商品入库的信息表
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  belongs_to :product_detail                          #某规格商品的id
+  belongs_to :store                                            #仓库id
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  field :amount,:type=>Integer                        #数量
+
+
 end

@@ -1,22 +1,20 @@
 class Order
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :courier_order
-  belongs_to :error_info
-  belongs_to :pay_type 
-  # field <name>, :type => <type>, :default => <value>
-  field :iscomplete,:type=>Boolean,:default=>false
-  field :isnow,:type=>Boolean,:default=>false
-  field :usetime,:type=>Integer,:default=>''
-  field :level,:type=>Integer
-  field :order_type,:type=>String
-  field :product_detail,:type=>Array
-  field :sum,:type=>Array
-  field :first_node,:type=>String
-  field :end_node,:type=>String
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  include Mongoid::Timestamps 
+  #取 送订单表
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  belongs_to :courier_order                                                     #快递员id
+  belongs_to :error_info                                                            
+  belongs_to :pay_type                                                              #支付方式
+
+  field :iscomplete,:type=>Boolean,:default=>false               #是否完成
+  field :isnow,:type=>Boolean,:default=>false                       #是否正在执行
+  field :usetime,:type=>Integer,:default=>''                            #此订单使用时间
+  field :level,:type=>Integer                                                        #订单的等级
+  field :order_type,:type=>String                                                 #订单是取还是送
+  field :product_detail,:type=>Array                                          #订单的商品的规格
+  field :sum,:type=>Array                                                             #数量
+  field :first_node,:type=>String                                                   #始发区id
+  field :end_node,:type=>String                                                   #终点区id
+
 end

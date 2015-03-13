@@ -1,20 +1,22 @@
 class CourierEmployee
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Timestamps
+  #快递员表
+
   belongs_to :courier_account
   has_many :courier_orders
-  # field <name>, :type => <type>, :default => <value>
+
   field :real_name,:type=>String
   field :email,:type=>String
-  field :isfree,:type=>Boolean,:default=>true
- field :whenfree,:type=>DateTime,:default=>''
- field :number,:type=>String
- field :money,:type=>Float,:default=>0
- field :goods,:type=>Integer,:default=>0
- field :is_work,:type=>Boolean
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  field :isfree,:type=>Boolean,:default=>true                     #快递员是否空闲
+  field :whenfree,:type=>DateTime,:default=>''                 #快递员何时空闲
+  field :number,:type=>String
+  field :money,:type=>Float,:default=>0                               #快递员身上有多少钱
+  field :product_details,:type=>Array                                    #快递员身上有什么商品
+  field :is_work,:type=>Boolean                                             #快递员是否上班了
+ 
+ #验证
+    validates_length_of            :email,    :within => 8..100
+    validates_uniqueness_of   :email,    :case_sensitive => false
+    validates_format_of            :email,    :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i ,:message=>'请输入正确的邮箱'
 end

@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs">
+  <li> <%= link_to tag_icon(:list, pat(:list)), url(:error_infos, :index) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:error_infos, :new) %></li>
+  <li class="active"> <%= link_to tag_icon(:edit, pat(:edit)), url(:error_infos, :edit, :id => @error_info.id) %></li>
+</ul>
+<div class="tabs-content">
+  <% form_for :error_info, url(:error_infos, :update, :id => @error_info.id), :method => :put, :class => 'form-horizontal' do |f| %>
+    <%= partial 'error_infos/form', :locals => { :f => f } %>
+  <% end %>
+</div>

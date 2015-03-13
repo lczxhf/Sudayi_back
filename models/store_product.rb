@@ -1,14 +1,12 @@
 class StoreProduct
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :courier_store
-  belongs_to :product_detail
-  # field <name>, :type => <type>, :default => <value>
-  field :message,:type=>String
-  field :sum,:type=>Integer
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  include Mongoid::Timestamps 
+  #配送商货架存放商品信息表
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  belongs_to :courier_store                 #供应商货架id
+  belongs_to :product_detail                #某种规格商品的id
+
+  field :message,:type=>String              #备注
+  field :sum,:type=>Integer                    #数量
+
 end

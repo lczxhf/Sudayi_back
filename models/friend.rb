@@ -1,13 +1,11 @@
 class Friend
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :customer_account
-  # field <name>, :type => <type>, :default => <value>
-  field :to_customer,:type=>String
-  field :is_delete,:type=>Boolean
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  include Mongoid::Timestamps 
+  #朋友表
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  belongs_to :customer_account                                              #客户的id
+ 
+  field :to_customer,:type=>String                                            #另一个客户的id
+  field :is_delete,:type=>Boolean,:default=>false                  #朋友关系是否被删除
+
 end

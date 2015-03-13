@@ -1,17 +1,16 @@
 class Comment
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :courier_order
-  belongs_to :product_detail
-  belongs_to :customer_account
-  # field <name>, :type => <type>, :default => <value>
-  field :message,:type=>String
-  field :comment_type,:type=>String
-  field :url,:type=>String
-  field :is_delete,:type=>Boolean
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  include Mongoid::Timestamps 
+  #评论表
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  belongs_to :courier_order                                   
+  belongs_to :product_detail                                 #评论的商品规格id
+  belongs_to :customer_account                          #评论的用户id
+  
+  field :message,:type=>String                  
+  field :comment_type,:type=>String                   #评论的等级,            如好评、差评
+  field :url,:type=>String                                         #评论时上传的照片 如买家秀
+  mount_uploader :url, ImageItemUpload
+  field :is_delete,:type=>Boolean                          #评论是否删除
+  
 end

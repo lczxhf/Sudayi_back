@@ -1,17 +1,15 @@
 class OrderSetting
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Timestamps 
+  #订单设置时间表
+
   belongs_to :courier_account
-  # field <name>, :type => <type>, :default => <value>
-  field :store_time,:type=>Integer,:default=>5
-  field :order_interval,:type=>Integer,:default=>5
-  field :store_vali_time,:type=>Integer,:default=>5
-  field :customer_vali_time,:type=>Integer,:default=>10
-  field :complete_after,:type=>String
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  field :store_time,:type=>Integer,:default=>5                        #仓库确定时间
+  field :order_interval,:type=>Integer,:default=>5                   #订单间隔时间
+  field :store_vali_time,:type=>Integer,:default=>5                  #在仓库验货时间
+  field :customer_vali_time,:type=>Integer,:default=>10          #客户验货时间
+  field :complete_after,:type=>String                                             #完成订单后行为
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+ 
 end

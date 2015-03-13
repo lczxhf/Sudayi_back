@@ -1,16 +1,13 @@
 class Category
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :category
+  include Mongoid::Timestamps 
+  #商品的分类表
+
+  belongs_to :category                        #分类属于分类! 例如牛仔裤属于裤子分类
   has_many :categories
   belongs_to :supplier_account
-  # field <name>, :type => <type>, :default => <value>
+
   field :name,:type=>String
   field :code,:type=>String
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
 end

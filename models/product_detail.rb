@@ -1,21 +1,17 @@
 class ProductDetail
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-   belongs_to :product
-  has_many :product_stores
-  has_many :comments
-  # field <name>, :type => <type>, :default => <value>
-   field :specification,:type=>String
+  include Mongoid::Timestamps 
+  #商品规格表
+
+   belongs_to :product                                                #商品id
+   has_many :product_stores                                      
+   has_many :comments
+   has_many :coustomer_services                            #客服
+
+   field :specification,:type=>String                           #规格
    field :price, :type => Float
-   field :storage, :type => Integer
-   field :no_store,:type=>Integer
-   field :is_rec,:type=>Boolean
-  # field <name>, :type => <type>, :default => <value>
-  
+   field :storage, :type => Integer                                #库存
+   field :no_store,:type=>Integer                                #此规格商品还有多少没加入仓库
+   field :is_rec,:type=>Boolean                                    #此规格是否是推荐
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
 end

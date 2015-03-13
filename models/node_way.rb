@@ -1,16 +1,14 @@
 class NodeWay
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :node
-  # field <name>, :type => <type>, :default => <value>
-  field :tonode,:type=>String
-  field :fee,:type=>Float
-  field :time,:type=>Integer
-  field :miles,:type=>Float
+  include Mongoid::Timestamps 
+  #区到区之间的距离表
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  belongs_to :node                                   #始发区的id
+ 
+  field :tonode,:type=>String                   #终点区的id
+  field :fee,:type=>Float                           #始发区到终点区的费用
+  field :time,:type=>Integer                    #始发区到终点区花费的时间
+  field :miles,:type=>Float                       #两者之间的距离
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+ 
 end

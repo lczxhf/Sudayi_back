@@ -1,0 +1,49 @@
+<% error = @courier_account.errors.include?(:user_name) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :user_name, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :user_name, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:user_name) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_account.errors.include?(:crypted_password) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :crypted_password, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :crypted_password, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:crypted_password) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_account.errors.include?(:mobile) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :mobile, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :mobile, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:mobile) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_account.errors.include?(:level) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :level, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :level, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:level) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_account.errors.include?(:account_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :account_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :account_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:account_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:courier_accounts, :index), :class => 'btn btn-default' %>
+</div>

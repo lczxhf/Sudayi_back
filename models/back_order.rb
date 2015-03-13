@@ -1,20 +1,18 @@
 class BackOrder
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Timestamps 
+  #快递员返回公司的订单表
+
   belongs_to :courier_order
   belongs_to :customer_account
   belongs_to :courier_store
   belongs_to :error_info
-  # field <name>, :type => <type>, :default => <value>
-   field :iscomplete,:type=>Boolean,:default=>false
-  field :isnow,:type=>Boolean,:default=>false
-  field :usetime,:type=>Integer,:default=>''
-  field :level,:type=>Integer
-  field :product_detail,:type=>Array
-  field :sum,:type=>Array
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+ 
+  field :iscomplete,:type=>Boolean,:default=>false  #是否完成 字段
+  field :isnow,:type=>Boolean,:default=>false           #是否现在执行 字段
+  field :usetime,:type=>Integer,:default=>''                #订单将使用的时间(分钟)
+  field :level,:type=>Integer                                           #订单的排列的等级
+  field :product_detail,:type=>Array                             #执行此订单时 快递员携带的商品的规格id
+  field :sum,:type=>Array                                               #执行此订单时 快递员携带的某规格商品的数量
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
 end

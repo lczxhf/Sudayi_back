@@ -29,10 +29,14 @@ Padrino.configure_apps do
   # enable :sessions
   set :session_secret, 'aae2413f4336c2f138ac2547db4ff92acce32f713001933b7cfd53fc43d759dd'
   set :protection, :except => :path_traversal
-  set :protect_from_csrf, true
+  set :protect_from_csrf, false
 end
 
 # Mounts the core application for this project
 
 Padrino.mount("SudayiBack::Admin", :app_file => Padrino.root('admin/app.rb')).to("/admin")
+
+Padrino.mount('SudayiBack::MobileAdmin', :app_file => Padrino.root('mobile_admin/app.rb')).to('/mobile_admin')
+
+Padrino.mount('SudayiBack::Mobile', :app_file => Padrino.root('mobile/app.rb')).to('/mobile')
 Padrino.mount('SudayiBack::App', :app_file => Padrino.root('app/app.rb')).to('/')

@@ -1,0 +1,87 @@
+<ul class="nav nav-tabs">
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:comments, :index) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:comments, :new) %></li>
+</ul>
+<div class=tabs-content>
+  <table id=list class="table table-striped table-hover table-condensed">
+    <thead>
+      <tr>
+        <th class="header list-menu">
+          <div class=dropdown>
+            <a href="#" class="list-menu-toggle dropdown-toggle" data-toggle='dropdown'>
+              <%= tag_icon :magic %> <span class=caret></span>
+            </a>
+            <ul class="list-menu dropdown-menu" role=menu>
+              <li class=ist-menu-wrapper>
+                <%= link_to tag_icon('check-square-o', pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link' %>
+              </li>
+              <li class=list-menu-wrapper.list-menu-wrapper-disabled>
+                <%= link_to tag_icon('square-o', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled' %>
+              </li>
+              <li class="list-menu-divider divider"></li>
+              <li class=list-menu-wrapper.list-menu-wrapper-disabled>
+                <%=link_to tag_icon('trash-o', pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled' %>
+                <div class='list-menu-popover-delete-selected popover right'>
+                  <div class=arrow></div>
+                  <h3 class=popover-title><%= pat(:delete_selected_title) %></h3>
+                  <div class=popover-content>
+                    <% form_tag url(:comments, :destroy_many), :method => :delete do %>
+                      <%=hidden_field_tag :comment_ids, :'data-delete-many-ids' => true %>
+                      <%=submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small' %>
+                      <div class='btn btn-default btn-small cancel'><%= pat(:cancel) %></div>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </th>
+                <th class=header> <%= mat(:comment, :created_at) %></th>
+                <th class=header> <%= mat(:comment, :updated_at) %></th>
+                <th class=header> <%= mat(:comment, :courier_order_id) %></th>
+                <th class=header> <%= mat(:comment, :product_detail_id) %></th>
+                <th class=header> <%= mat(:comment, :customer_account_id) %></th>
+                <th class=header> <%= mat(:comment, :message) %></th>
+                <th class=header> <%= mat(:comment, :comment_type) %></th>
+                <th class=header> <%= mat(:comment, :url) %></th>
+                <th class=header> <%= mat(:comment, :is_delete) %></th>
+                <th class="header list-row-action-header"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr class=list-row>
+          <td class="list-column list-selectable">
+            <%= check_box_tag 'comment_ids[]', :value => comment.id, :class => 'list-selectable-checkbox' %>
+           </td>
+          <td class=list-column> <%= time_ago_in_words comment.created_at %></td>
+          <td class=list-column> <%= time_ago_in_words comment.updated_at %></td>
+          <td class=list-column> <%= comment.courier_order_id %> </td>
+          <td class=list-column> <%= comment.product_detail_id %> </td>
+          <td class=list-column> <%= comment.customer_account_id %> </td>
+          <td class=list-column> <%= comment.message %> </td>
+          <td class=list-column> <%= comment.comment_type %> </td>
+           <td class=list-column> <%=image_tag comment.url.thumb if comment.url? %> </td>
+          <td class=list-column> <%= comment.is_delete %> </td>
+          <td class="list-column list-row-action">
+            <div class='list-row-action-wrapper'>
+               <%= link_to tag_icon(:edit), :href => url(:comments, :edit, :id => comment.id), :rel => :tooltip, :title => "#{pat(:edit)} comment", :class => 'list-row-action-wrapper-link' %>
+               <%= link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} comment", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
+               <div class="popover list-row-action-popover-delete-one left">
+                 <div class=arrow> </div>
+                 <h3 class=popover-title><%= pat(:delete, :model => "comment") %></h3>
+                 <div class=popover-content>
+                   <%- form_tag url(:comments, :destroy, :id => comment.id), :method => :delete do %>
+                     <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
+                     <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
+                   <% end %>
+                 </div>
+               </div>
+             </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,97 @@
+<% error = @credit_info.errors.include?(:address_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :address_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :address_id, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:address_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:state_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :state_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :state_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:state_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:supplier_account_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :supplier_account_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :supplier_account_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:supplier_account_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:courier_account_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :courier_account_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :courier_account_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:courier_account_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:name) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :name, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :name, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:name) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:email) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :email, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :email, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:email) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:card_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :card_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :card_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:card_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:url) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :url, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :url, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:url) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:url2) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :url2, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :url2, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:url2) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:url3) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :url3, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :url3, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:url3) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @credit_info.errors.include?(:validate_person) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :validate_person, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :validate_person, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:validate_person) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:credit_infos, :index), :class => 'btn btn-default' %>
+</div>

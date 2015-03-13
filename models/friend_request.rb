@@ -1,17 +1,15 @@
 class FriendRequest
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :customer_account
-  belongs_to :comment
-  # field <name>, :type => <type>, :default => <value>
-  field :form_customer,:type=>String
+  include Mongoid::Timestamps 
+  #申请好友表
+
+  belongs_to :customer_account                              #想要加的客户id
+  belongs_to :comment                                               #申请好友是根据哪条评论而加的
+
+  field :form_customer,:type=>String                        #哪个客户申请的
   field :message,:type=>String
-  field :is_delete,:type=>Boolean
-  field :is_read,:type=>String
-
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
+  field :is_delete,:type=>Boolean,:default=>false     #是否已被删除
+  field :is_read,:type=>String,:default=>false             #是否已读
+  field :is_accept,:type=>Boolean                                 #接受还是拒绝了
+ 
 end

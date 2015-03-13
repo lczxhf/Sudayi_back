@@ -1,22 +1,21 @@
 class Product
   include Mongoid::Document
-  include Mongoid::Timestamps # adds created_at and updated_at fields
-  belongs_to :store
+  include Mongoid::Timestamps 
+  #商品表
+
+  belongs_to :store                                                 #仓库id
   belongs_to :supplier_account
-  belongs_to :state
-  belongs_to :pay_type
-  belongs_to :category
+  belongs_to :state                                                 #商品认证状态
+  belongs_to :category                                            #商品分类
   has_many :image_items
   has_many :product_details
-  has_many :customer_services
-  # field <name>, :type => <type>, :default => <value>
-   field :name, :type => String
-  field :description, :type => String
-  field :level,  :type => Integer
-  field :is_bring_three,:type=>Boolean
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
 
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
-end
+
+   field :name, :type => String
+  field :description, :type => String                               #商品描述
+  field :level,  :type => Integer                                        #商品等级
+  field :is_bring_three,:type=>Boolean                          #是否支持以一携三
+  field :validate_person,:type=>String                             #认证员
+  field :pay_types,:type=>Array                                         #商品支持的支付方式
+
+end 
