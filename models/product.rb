@@ -18,4 +18,14 @@ class Product
   field :validate_person,:type=>String                             #认证员
   field :pay_types,:type=>Array                                         #商品支持的支付方式
 
+
+def self.qcode(id)
+    #二维码
+    product = find(id)
+    url = 'http://'+request.host+'get_product?pid='+id
+    qr=RQRCode::QRCode.new(url)
+    png=qr.to_img  # returns an instance of ChunkyPNG
+    png.resize(300, 300).save('/home/ubuntu/sudayi_back/public/images/erweima/'+id+'.png')
+  end
+
 end 

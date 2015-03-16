@@ -3,10 +3,11 @@ class FirmInfo
   include Mongoid::Timestamps 
   #企业认证表
 
-   belongs_to :address
+   belongs_to :firm_address
    belongs_to :state                                                          #认证的状态
    belongs_to :firm_type                                                  #公司的类型
    belongs_to :supplier_account
+   belongs_to :courier_account
 
    field :firm_name,:type=>String                                   #公司名
    field :legal_person,:type=>String                                #法人

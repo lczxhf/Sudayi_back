@@ -30,6 +30,14 @@ end
 get :area do
   Area.where(city_id:params[:city_id]).to_json
 end
+
+#验证码
+get :code_image do
   
+  session[:noisy_image]=NoisyImage.new(4)  
+  session[:code]=session[:noisy_image].code 
+  image=session[:noisy_image].image  
+  image
+end  
 
 end

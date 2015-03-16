@@ -32,6 +32,10 @@ module SudayiBack
     end
 
     access_control.roles_for :admin do |role|
+      role.project_module :firm_addresses, '/firm_addresses'
+      role.project_module :supplier_addresses, '/supplier_addresses'
+      role.project_module :courier_addresses, '/courier_addresses'
+      role.project_module :store_addresses, '/store_addresses'
       role.project_module :order_times, '/order_times'
       role.project_module :order_settings, '/order_settings'
       role.project_module :image_items, '/image_items'

@@ -11,5 +11,10 @@ class OrderSetting
   field :customer_vali_time,:type=>Integer,:default=>10          #客户验货时间
   field :complete_after,:type=>String                                             #完成订单后行为
 
+  def  self.alltime
+    setting=Setting.last
+    time=setting.store_time+setting.courier_time+setting.store_vali_time+setting.customer_vali_time
+    return time
+ end
  
 end

@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
-  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:courier_accounts, :index) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:courier_accounts, :new) %></li>
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:courier_addresses, :index) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:courier_addresses, :new) %></li>
 </ul>
 <div class=tabs-content>
   <table id=list class="table table-striped table-hover table-condensed">
@@ -25,8 +25,8 @@
                   <div class=arrow></div>
                   <h3 class=popover-title><%= pat(:delete_selected_title) %></h3>
                   <div class=popover-content>
-                    <% form_tag url(:courier_accounts, :destroy_many), :method => :delete do %>
-                      <%=hidden_field_tag :courier_account_ids, :'data-delete-many-ids' => true %>
+                    <% form_tag url(:courier_addresses, :destroy_many), :method => :delete do %>
+                      <%=hidden_field_tag :courier_address_ids, :'data-delete-many-ids' => true %>
                       <%=submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small' %>
                       <div class='btn btn-default btn-small cancel'><%= pat(:cancel) %></div>
                     <% end %>
@@ -36,41 +36,41 @@
             </ul>
           </div>
         </th>
-                <th class=header> <%= mat(:courier_account, :created_at) %></th>
-                <th class=header> <%= mat(:courier_account, :updated_at) %></th>
-                <th class=header> <%= mat(:courier_account, :courier_address_id) %></th>
-                <th class=header> <%= mat(:courier_account, :user_name) %></th>
-                <th class=header> <%= mat(:courier_account, :crypted_password) %></th>
-                <th class=header> <%= mat(:courier_account, :mobile) %></th>
-                <th class=header> <%= mat(:courier_account, :level) %></th>
-                <th class=header> <%= mat(:courier_account, :account_id) %></th>
+                <th class=header> <%= mat(:courier_address, :created_at) %></th>
+                <th class=header> <%= mat(:courier_address, :updated_at) %></th>
+                <th class=header> <%= mat(:courier_address, :country_id) %></th>
+                <th class=header> <%= mat(:courier_address, :province_id) %></th>
+                <th class=header> <%= mat(:courier_address, :city_id) %></th>
+                <th class=header> <%= mat(:courier_address, :area_id) %></th>
+                <th class=header> <%= mat(:courier_address, :detail_id) %></th>
+                <th class=header> <%= mat(:courier_address, :node_id) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @courier_accounts.each do |courier_account| %>
+      <% @courier_addresses.each do |courier_address| %>
         <tr class=list-row>
           <td class="list-column list-selectable">
-            <%= check_box_tag 'courier_account_ids[]', :value => courier_account.id, :class => 'list-selectable-checkbox' %>
+            <%= check_box_tag 'courier_address_ids[]', :value => courier_address.id, :class => 'list-selectable-checkbox' %>
            </td>
-          <td class=list-column> <%= time_ago_in_words courier_account.created_at %></td>
-          <td class=list-column> <%= time_ago_in_words courier_account.updated_at %></td>
-          <td class=list-column> <%= courier_account.courier_address_id %> </td>
-          <td class=list-column> <%= courier_account.user_name %> </td>
-          <td class=list-column> <%= courier_account.crypted_password %> </td>
-          <td class=list-column> <%= courier_account.mobile %> </td>
-          <td class=list-column> <%= courier_account.level %> </td>
-          <td class=list-column> <%= courier_account.account_id %> </td>
+          <td class=list-column> <%= time_ago_in_words courier_address.created_at %></td>
+          <td class=list-column> <%= time_ago_in_words courier_address.updated_at %></td>
+          <td class=list-column> <%= courier_address.country_id %> </td>
+          <td class=list-column> <%= courier_address.province_id %> </td>
+          <td class=list-column> <%= courier_address.city_id %> </td>
+          <td class=list-column> <%= courier_address.area_id %> </td>
+          <td class=list-column> <%= courier_address.detail_id %> </td>
+          <td class=list-column> <%= courier_address.node_id %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
-               <%= link_to tag_icon(:edit), :href => url(:courier_accounts, :edit, :id => courier_account.id), :rel => :tooltip, :title => "#{pat(:edit)} courier_account", :class => 'list-row-action-wrapper-link' %>
-               <%= link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} courier_account", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
+               <%= link_to tag_icon(:edit), :href => url(:courier_addresses, :edit, :id => courier_address.id), :rel => :tooltip, :title => "#{pat(:edit)} courier_address", :class => 'list-row-action-wrapper-link' %>
+               <%= link_to tag_icon('trash-o'), :rel => :tooltip, :title => "#{pat(:delete)} courier_address", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
                <div class="popover list-row-action-popover-delete-one left">
                  <div class=arrow> </div>
-                 <h3 class=popover-title><%= pat(:delete, :model => "courier_account") %></h3>
+                 <h3 class=popover-title><%= pat(:delete, :model => "courier_address") %></h3>
                  <div class=popover-content>
-                   <%- form_tag url(:courier_accounts, :destroy, :id => courier_account.id), :method => :delete do %>
+                   <%- form_tag url(:courier_addresses, :destroy, :id => courier_address.id), :method => :delete do %>
                      <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
                      <div class="btn btn-default btn-small cancel"><%= pat(:cancel) %></div>
                    <% end %>

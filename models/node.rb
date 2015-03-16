@@ -10,4 +10,10 @@ class Node
   field :streets,:type=>Array
 
 
+ def self.get_node_way(node_id)
+    node=Node.find(node_id)
+    node_ways=NodeWay.where(node_id:node._id)
+    return node_ways
+ end
+ 
 end

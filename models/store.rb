@@ -5,7 +5,7 @@ class Store
 
   belongs_to :supplier_account
   belongs_to :state                                                                     #仓库认证状态
-  belongs_to :address                                                               #仓库地址
+  belongs_to :store_address                                                               #仓库地址
   has_many :store_employee
   has_many :products
   has_many :orders

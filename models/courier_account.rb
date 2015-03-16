@@ -5,7 +5,7 @@ class CourierAccount
 
   attr_accessor :password, :password_confirmation
 
-  belongs_to :address
+  belongs_to :courier_address
   has_one :credit_info
   has_one :firm_info
   has_many :courier_employees

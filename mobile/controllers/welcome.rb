@@ -18,7 +18,7 @@ SudayiBack::Mobile.controllers :welcome do
     get :get_pics_a do
         @products=[]
         ProductStore.all.each do |product_store|
-                @products<<product_store.product_collection.product
+                @products<<product_store.product_detail.product
         end
     @products.to_json(:include=>{:image_items=>{:only=>[:url]},:product_details=>{:only=>[:price,:storage,:specification]}})
  end

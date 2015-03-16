@@ -3,9 +3,8 @@ class CourierOrder
   include Mongoid::Timestamps 
   #快递员订单表
 
+  has_many :carts
   belongs_to :courier_employee                                              #订单的快递员id
-  belongs_to :store                                                                      #订单的
-  belongs_to :customer_account                                              #订单的客户id
   has_many :orders   
   has_one :back_order
   

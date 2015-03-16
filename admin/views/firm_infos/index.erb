@@ -38,10 +38,11 @@
         </th>
                 <th class=header> <%= mat(:firm_info, :created_at) %></th>
                 <th class=header> <%= mat(:firm_info, :updated_at) %></th>
-                <th class=header> <%= mat(:firm_info, :address_id) %></th>
+                <th class=header> <%= mat(:firm_info, :firm_address_id) %></th>
                 <th class=header> <%= mat(:firm_info, :state_id) %></th>
                 <th class=header> <%= mat(:firm_info, :firm_type_id) %></th>
                 <th class=header> <%= mat(:firm_info, :supplier_account_id) %></th>
+                <th class=header> <%= mat(:firm_info, :courier_account_id) %></th>
                 <th class=header> <%= mat(:firm_info, :firm_name) %></th>
                 <th class=header> <%= mat(:firm_info, :legal_person) %></th>
                 <th class=header> <%= mat(:firm_info, :business_license_number) %></th>
@@ -62,17 +63,18 @@
            </td>
           <td class=list-column> <%= time_ago_in_words firm_info.created_at %></td>
           <td class=list-column> <%= time_ago_in_words firm_info.updated_at %></td>
-          <td class=list-column> <%= firm_info.address_id %> </td>
+          <td class=list-column> <%= firm_info.firm_address_id %> </td>
           <td class=list-column> <%= firm_info.state_id %> </td>
           <td class=list-column> <%= firm_info.firm_type_id %> </td>
           <td class=list-column> <%= firm_info.supplier_account_id %> </td>
+          <td class=list-column> <%= firm_info.courier_account_id %> </td>
           <td class=list-column> <%= firm_info.firm_name %> </td>
           <td class=list-column> <%= firm_info.legal_person %> </td>
           <td class=list-column> <%= firm_info.business_license_number %> </td>
           <td class=list-column> <%= firm_info.org_code %> </td>
-          <td class=list-column> <%=image_tag firm_info.url.thumb if firm_info.url? %> </td>
-          <td class=list-column> <%=image_tag firm_info.url2.thumb if firm_info.url2? %> </td>
-          <td class=list-column> <%=image_tag firm_info.url3.thumb if firm_info.url3? %> </td>
+          <td class=list-column> <%= firm_info.url %> </td>
+          <td class=list-column> <%= firm_info.url2 %> </td>
+          <td class=list-column> <%= firm_info.url3 %> </td>
           <td class=list-column> <%= firm_info.validate_person %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
