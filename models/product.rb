@@ -17,7 +17,7 @@ class Product
   field :is_bring_three,:type=>Boolean                          #是否支持以一携三
   field :validate_person,:type=>String                             #认证员
   field :pay_types,:type=>Array                                         #商品支持的支付方式
-
+  field :tag,:type=>Array
 
 def self.qcode(id)
     #二维码
