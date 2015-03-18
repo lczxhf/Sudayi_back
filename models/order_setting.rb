@@ -11,10 +11,14 @@ class OrderSetting
   field :customer_vali_time,:type=>Integer,:default=>10          #客户验货时间
   field :complete_after,:type=>String                                             #完成订单后行为
 
-  def  self.alltime
-    setting=Setting.last
-    time=setting.store_time+setting.courier_time+setting.store_vali_time+setting.customer_vali_time
+  def  self.all_time(courier_account)
+    setting=OrderSetting.where(courier_account_id:courier_account).first
+    time=setting.store_time+setting.order_interval+setting.store_vali_time+setting.customer_vali_time
     return time
  end
- 
+ def  self.base_time(courier_account)
+  setting=OrderSetting.where(courier_account_id:courier_account).first
+    time=setting.store_time+setting.order_interval+setting.store_vali_time
+    return time
+ end
 end

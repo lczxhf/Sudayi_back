@@ -32,6 +32,9 @@ module SudayiBack
     end
 
     access_control.roles_for :admin do |role|
+      role.project_module :tags, '/tags'
+      role.project_module :coupons, '/coupons'
+      role.project_module :product_points, '/product_points'
       role.project_module :firm_addresses, '/firm_addresses'
       role.project_module :supplier_addresses, '/supplier_addresses'
       role.project_module :courier_addresses, '/courier_addresses'

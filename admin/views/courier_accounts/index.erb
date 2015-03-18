@@ -40,7 +40,7 @@
                 <th class=header> <%= mat(:courier_account, :updated_at) %></th>
                 <th class=header> <%= mat(:courier_account, :courier_address_id) %></th>
                 <th class=header> <%= mat(:courier_account, :user_name) %></th>
-                <th class=header> <%= mat(:courier_account, :crypted_password) %></th>
+
                 <th class=header> <%= mat(:courier_account, :mobile) %></th>
                 <th class=header> <%= mat(:courier_account, :level) %></th>
                 <th class=header> <%= mat(:courier_account, :account_id) %></th>
@@ -56,9 +56,9 @@
            </td>
           <td class=list-column> <%= time_ago_in_words courier_account.created_at %></td>
           <td class=list-column> <%= time_ago_in_words courier_account.updated_at %></td>
-          <td class=list-column> <%= courier_account.courier_address_id %> </td>
+          <td class=list-column> <%= courier_account.courier_address.node.name %> </td>
           <td class=list-column> <%= courier_account.user_name %> </td>
-          <td class=list-column> <%= courier_account.crypted_password %> </td>
+
           <td class=list-column> <%= courier_account.mobile %> </td>
           <td class=list-column> <%= courier_account.level %> </td>
           <td class=list-column> <%= courier_account.account_id %> </td>

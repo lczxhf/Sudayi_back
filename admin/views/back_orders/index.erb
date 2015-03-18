@@ -48,6 +48,7 @@
                 <th class=header> <%= mat(:back_order, :level) %></th>
                 <th class=header> <%= mat(:back_order, :product_detail) %></th>
                 <th class=header> <%= mat(:back_order, :sum) %></th>
+                <th class=header> <%= mat(:back_order, :can_stop) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -70,6 +71,7 @@
           <td class=list-column> <%= back_order.level %> </td>
           <td class=list-column> <%= back_order.product_detail %> </td>
           <td class=list-column> <%= back_order.sum %> </td>
+          <td class=list-column> <%= back_order.can_stop %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:back_orders, :edit, :id => back_order.id), :rel => :tooltip, :title => "#{pat(:edit)} back_order", :class => 'list-row-action-wrapper-link' %>

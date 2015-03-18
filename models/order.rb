@@ -11,10 +11,10 @@ class Order
   field :iscomplete,:type=>Boolean,:default=>false               #是否完成
   field :isnow,:type=>Boolean,:default=>false                       #是否正在执行
   field :usetime,:type=>Integer,:default=>''                            #此订单使用时间
-  field :level,:type=>Integer                                                        #订单的等级
+  field :level,:type=>Integer,:default=>0                                  #订单的等级
   field :order_type,:type=>String                                                 #订单是取还是送
   field :product_detail,:type=>Array                                          #订单的商品的规格
-  field :discount,:type=>Float,:default=>1                                 #优惠 打折
+  field :discount,:type=>Array                                                      #优惠券
   field :sum,:type=>Array                                                             #数量
   field :first_node,:type=>String                                                   #始发区id
   field :end_node,:type=>String                                                   #终点区id

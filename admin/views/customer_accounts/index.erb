@@ -40,7 +40,7 @@
                 <th class=header> <%= mat(:customer_account, :updated_at) %></th>
                 <th class=header> <%= mat(:customer_account, :address_id) %></th>
                 <th class=header> <%= mat(:customer_account, :username) %></th>
-                <th class=header> <%= mat(:customer_account, :crypted_password) %></th>
+
                 <th class=header> <%= mat(:customer_account, :real_name) %></th>
                 <th class=header> <%= mat(:customer_account, :level) %></th>
                 <th class=header> <%= mat(:customer_account, :mobile) %></th>
@@ -60,7 +60,7 @@
           <td class=list-column> <%= time_ago_in_words customer_account.updated_at %></td>
           <td class=list-column> <%= customer_account.address_id %> </td>
           <td class=list-column> <%= customer_account.username %> </td>
-          <td class=list-column> <%= customer_account.crypted_password %> </td>
+
           <td class=list-column> <%= customer_account.real_name %> </td>
           <td class=list-column> <%= customer_account.level %> </td>
           <td class=list-column> <%= customer_account.mobile %> </td>

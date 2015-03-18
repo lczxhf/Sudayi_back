@@ -78,6 +78,14 @@
     <span class='help-inline'><%= error ? f.error_message_on(:sum) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
+<% error = @back_order.errors.include?(:can_stop) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :can_stop, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :can_stop, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:can_stop) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
 
 
 <div class="form-actions">

@@ -22,6 +22,14 @@
     <span class='help-inline'><%= error ? f.error_message_on(:pay_type_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
+<% error = @order.errors.include?(:store_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :store_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :store_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:store_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
 <% error = @order.errors.include?(:iscomplete) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :iscomplete, :class => 'control-label' %>
@@ -68,6 +76,14 @@
   <div class='controls'>
     <%= f.text_field :product_detail, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:product_detail) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @order.errors.include?(:discount) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :discount, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :discount, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:discount) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 <% error = @order.errors.include?(:sum) %>

@@ -40,7 +40,7 @@
                 <th class=header> <%= mat(:supplier_account, :updated_at) %></th>
                 <th class=header> <%= mat(:supplier_account, :supplier_address_id) %></th>
                 <th class=header> <%= mat(:supplier_account, :user_name) %></th>
-                <th class=header> <%= mat(:supplier_account, :crypted_password) %></th>
+
                 <th class=header> <%= mat(:supplier_account, :real_name) %></th>
                 <th class=header> <%= mat(:supplier_account, :email) %></th>
                 <th class=header> <%= mat(:supplier_account, :mobile) %></th>
@@ -59,9 +59,9 @@
            </td>
           <td class=list-column> <%= time_ago_in_words supplier_account.created_at %></td>
           <td class=list-column> <%= time_ago_in_words supplier_account.updated_at %></td>
-          <td class=list-column> <%= supplier_account.supplier_address_id %> </td>
+          <td class=list-column> <%= supplier_account.supplier_address.node.name %> </td>
           <td class=list-column> <%= supplier_account.user_name %> </td>
-          <td class=list-column> <%= supplier_account.crypted_password %> </td>
+
           <td class=list-column> <%= supplier_account.real_name %> </td>
           <td class=list-column> <%= supplier_account.email %> </td>
           <td class=list-column> <%= supplier_account.mobile %> </td>

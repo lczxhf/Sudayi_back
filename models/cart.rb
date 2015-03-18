@@ -6,6 +6,7 @@ class Cart
   belongs_to :courier_order
   belongs_to :customer_account
   belongs_to :product_detail
+  belongs_to :coupon
 
   field :sum,:type=>Integer
   field :message,:type=>String
