@@ -10,27 +10,74 @@ end
 
 post :create_order, :csrf_protection=>false do
     if params[:cart]
-       @account = CourierAccount.find('55094e654c31dc6fec000007')
-       if @account.courier_employees.where(is_work:true).first
-          node = @account.courier_address.node._id
+       @account = CourierAccount.find('55094e654c31dc6fec000007')  #找到配送商,这里因为没有,所以填了一个固定的
+       if @account.courier_employees.where(is_work:true).first                 #找到配商的正在上班的快递员
+          node = @account.courier_address.node._id                                      #获取配送商所在的区
           cart_arr = params[:cart].split(',')
           carts = []                          #存购物车对象的数组
           store_nodes = []              #暂存要去的仓库的node_id数组
           real_store_nodes = []      #存在把公司作为始发点的话,怎样的路线花费的时间最短
           work_store_nodes={}       #存身上有单的快递员在完成了订单后送去客户,怎样的路线花费的时间最短
           end_node={}                   #快递员最后一张单结束时的所在区
+          stores=[]                             #中间变量
           cart_arr.each do |cart_id|
-               carts<<cart = Cart.find(cart_id)                                        #获取客户要购买的购物车对象 把它们加入数组
-               stores<<cart.product_detail.product_store.store
-               if !cart.product_detail.product_store.store.is_open
-                  render :html,"#{Cart.find(cart_id).product_detail.product.name}商品所在仓库没有开门"
+               cart = Cart.find(cart_id)                                        #获取客户要购买的购物车对象 把它们加入数组
+               carts<<cart
+               product_stores=cart.product_detail.product_stores                 #获取此规格商品在什么仓库下有货
+               product_stores.each_with_index do |product_store,index|   #循环以上的仓库
+                      if product_stores.size==1                                                         #判断是不是只有一个仓库
+                            if !product_store.store.is_open                                           #判断仓库是否开门了
+                                  render :html,"#{Cart.find(cart_id).product_detail.product.name}商品所在仓库没有开门"
+                            end
+                      else
+                            if !product_store.store.is_open
+                                  product_stores.delete_at(index)
+                            end
+                      end
                end
-               stores.uniq
-               stores.each do |store|
-                        store_nodes<< store.store_address.node._id
-                    end
-            end
-          customer_node=carts[0].customer_account.address.node._id
+               
+               if product_stores.size==1
+                      stores<<product_stores[0]                                          #把仓库加到暂存变量
+               else
+                      arr=[]
+                      product_stores.each do |product_store|
+                            arr<<product_store
+                      end
+                      stores<<arr                                                                    #把仓库数组加到暂存变量
+               end
+          end
+          stores.uniq                                                                                 #删除暂存变量里相同的仓库
+          stores.each do |store|                                                            #遍历仓库
+                if store.class=='Array'                                                         #判断暂存变量里的某一个元素是不是数组
+                      is_add=false
+                      store_arr=[]
+                      store.each do |arr|
+                            if !stores.include?(arr)                                              #判断数组里的仓库和暂存变量里的仓库有没有相同
+                                  store_arr<<arr.store_address.node._id
+                                  stores.each do |a|
+                                        if a.store_address.node._id==arr.store_address.node._id    #判断数组里的仓库的所在区有没有和暂存变量里的仓库的所在区相同
+                                                store_nodes<<arr.store_address.node._id
+                                                is_add=true
+                                                return
+                                        end
+                                  end
+                                  if is_add                                                               #判断数组里的仓库有没有被加到store_nodes里
+                                        return
+                                  end
+                            else
+                                    is_add=true
+                                    return
+                            end
+                      end
+                      if !is_add                                                                        
+                            store_nodes<<store_arr                                        #如果没添加就把仓库所在区数组加到store_nodes里
+                      end
+                else
+                      store_nodes<< store.store_address.node._id
+                end
+               
+          end
+          customer_node=carts[0].customer_account.address.node._id   #获取客户所在的区
           if store_nodes.size==1                               #判断这张订单是不是只需要去一个仓库
               real_store_nodes << NodeWay.where(node_id:node,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
               real_store_nodes << store_nodes[0]

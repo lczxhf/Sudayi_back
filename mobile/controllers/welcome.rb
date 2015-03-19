@@ -20,7 +20,7 @@ SudayiBack::Mobile.controllers :welcome do
         ProductStore.all.each do |product_store|
                 @products<<product_store.product_detail.product
         end
-    @products.to_json(:include=>{:image_items=>{:only=>[:url]},:product_details=>{:only=>[:price,:storage,:specification]}})
+    @products.to_json(:include=>{:image_items=>{:only=>[:url]},:product_details=>{:only=>[:price,:storage,:reserve,:specification]}})
  end
 
 end

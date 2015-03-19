@@ -22,19 +22,38 @@ class CourierOrder
       store_nodes.size.times do 
           time=111111111111
           node_index=0
+          arr_index=-1
           store_nodes.each_with_index do |store_node,index|
-              node_way = NodeWay.where(node_id:first_node,tonode:store_node).first.time
-              time = node_way if node_way < time
-              node_index = index if node_way < time
+              if store_node.class=='Array'
+                    store_time=[]
+                    store_node.each_with_index do |arr,index_arr|
+                          node_way<< NodeWay.where(node_id:first_node,tonode:arr).first.time
+                          time = node_way if node_way < time
+                          arr_index = index_arr if node_way < time
+                    end
+                    if arr_index!=-1
+                          node_index=index
+                    end
+              else
+                      node_way = NodeWay.where(node_id:first_node,tonode:store_node).first.time
+                      time = node_way if node_way < time
+                      node_index = index if node_way < time
+              end
           end
-          work_store_nodes<<store_nodes[node_index]
-          work_store_nodes[0]+=time
+          if arr_index!=-1
+                real_node=store_nodes[node_index][arr_index]
+                store_nodes[node_index]=real_node
+                arr_index=-1
+          end
+          new_store_nodes<<store_nodes[node_index]
+          new_store_nodes[0]+=time
           first_node = store_nodes[node_index]
           store_nodes.delete_at(node_index)
       end
       return new_store_nodes
  end
 
+#生成订单表
 def self.create_order(courier_nodes,employee_id,courier_account,carts,first_node,end_node)                                                #创建订单
       courier_order=CourierOrder.new
       employee=CourierEmployee.find(employee_id)

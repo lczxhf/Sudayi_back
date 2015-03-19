@@ -7,6 +7,7 @@ class ProductStore
   belongs_to :store                                            #仓库id
 
   field :amount,:type=>Integer                        #数量
+  field :reserve,:type=>Integer,:default=>0             #被预定的数量
 
 
 end
