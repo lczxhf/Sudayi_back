@@ -19,12 +19,17 @@ class CourierOrder
       first_node = node
       new_store_nodes=[]
       new_store_nodes<<0
-      store_nodes.size.times do 
+      new_stores
+      a=store_nodes.size
+      (a-2).times do 
           time=111111111111
           node_index=0
           arr_index=-1
-          store_nodes.each_with_index do |store_node,index|
-              if store_node.class.name=='Array'
+          b=store_nodes.size
+          store_nodes.dup.each_with_index do |store_node,index|
+              if index==b-1
+                    break
+              elsif store_node.class.name=='Array'
                     store_time=[]
                     store_node.each_with_index do |arr,index_arr|
                           node_way<< NodeWay.where(node_id:first_node,tonode:arr).first.time
@@ -40,6 +45,7 @@ class CourierOrder
                       node_index = index if node_way < time
               end
           end
+          middle_store
           if arr_index!=-1
                 real_node=store_nodes[node_index][arr_index]
                 stores[node_index]=stores[node_index][arr_index]
@@ -48,10 +54,14 @@ class CourierOrder
           end
           new_store_nodes<<store_nodes[node_index]
           new_store_nodes[0]+=time
+          new_stores<<stores[node_index]
           first_node = store_nodes[node_index]
-          store_nodes.delete_at(node_index)
+          store_nodes.delete(store_node)
       end
-      return new_store_nodes
+      new_store_nodes[0]+=NodeWay.where(node_id:new_store_nodes.last,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:store_nodes.last).first.time
+      new_store_nodes<<store_nodes[0]
+      new_store_nodes<<store_nodes.last
+      return new_store_nodes, new_stores
  end
 
 #生成订单表
