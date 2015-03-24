@@ -20,9 +20,11 @@ post :create_order, :csrf_protection=>false do
           work_store_nodes={}       #存身上有单的快递员在完成了订单后送去客户,怎样的路线花费的时间最短
           end_node={}                   #快递员最后一张单结束时的所在区
           stores=[]                             #中间变量
+          stores_hash={}
           cart_arr.each do |cart_id|
                cart = Cart.find(cart_id)                                        #获取客户要购买的购物车对象 把它们加入数组
                carts<<cart
+
                product_stores=cart.product_detail.product_stores                 #获取此规格商品在什么仓库下有货
                product_stores.each_with_index do |product_store,index|   #循环以上的仓库
                       if product_stores.size==1                                                         #判断是不是只有一个仓库
@@ -48,15 +50,16 @@ post :create_order, :csrf_protection=>false do
           end
           stores.uniq                                                                                 #删除暂存变量里相同的仓库
           stores.each do |store|                                                            #遍历仓库
-                if store.class=='Array'                                                         #判断暂存变量里的某一个元素是不是数组
+                if store.class.name=='Array'                                                         #判断暂存变量里的某一个元素是不是数组
                       is_add=false
                       store_arr=[]
-                      store.each do |arr|
+                      store.each_with_index do |arr,arr_index|
                             if !stores.include?(arr)                                              #判断数组里的仓库和暂存变量里的仓库有没有相同
                                   store_arr<<arr.store_address.node._id
                                   stores.each do |a|
                                         if a.store_address.node._id==arr.store_address.node._id    #判断数组里的仓库的所在区有没有和暂存变量里的仓库的所在区相同
                                                 store_nodes<<arr.store_address.node._id
+                                                stores[arr_index]=arr
                                                 is_add=true
                                                 return
                                         end
@@ -65,6 +68,7 @@ post :create_order, :csrf_protection=>false do
                                         return
                                   end
                             else
+                                    stores.delete_at(arr_index)
                                     is_add=true
                                     return
                             end
@@ -78,11 +82,14 @@ post :create_order, :csrf_protection=>false do
                
           end
           customer_node=carts[0].customer_account.address.node._id   #获取客户所在的区
-          if store_nodes.size==1                               #判断这张订单是不是只需要去一个仓库
+          store_nodes<<customer_node
+          if store_nodes.size==2                               #判断这张订单是不是只需要去一个仓库
               real_store_nodes << NodeWay.where(node_id:node,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
               real_store_nodes << store_nodes[0]
+              stores_hash["company"]=stores
           else
-              real_store_nodes = CourierOrder.get_node_time(store_nodes,node)
+              real_store_nodes = CourierOrder.get_node_time(store_nodes.dup,node,stores.dup)
+              stores_hash["company"]=stores
               real_store_nodes[0]+=NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
           end
 
@@ -110,7 +117,7 @@ post :create_order, :csrf_protection=>false do
                                 temp_store_nodes << "相同区"
                             end
                       else
-                          temp_store_nodes = CourierOrder.get_node_time(store_nodes,end_node[index])
+                          temp_store_nodes = CourierOrder.get_node_time(store_nodes.dup,end_node[index],stores.dup)
                           temp_store_nodes[0]+=NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
                           if end_node[index]==temp_store_nodes[1]
                             temp_store_nodes<<"相同区"
@@ -140,14 +147,14 @@ post :create_order, :csrf_protection=>false do
           if courier_index==-1       #courier_index如果是-1就代表在公司起送比较快
              real_courier=@account.courier_employees.where(is_work:true,isfree:true).first
                 if  real_courier  #判断配送商是否有正在待命的快递员
-                      CourierOrder.create_order(real_store_nodes,real_courier._id,@account._id,carts,node,customer_node)
+                      CourierOrder.create_order(real_store_nodes,real_courier._id,@account._id,carts,node,stores)
                 else
                       real_courier=employee[courier_index_2]
-                      CourierOrder.create_order(work_store_nodes[courier_index_2],real_courier._id,@account._id,carts,end_node[courier_index_2],customer_node)
+                      CourierOrder.create_order(work_store_nodes[courier_index_2],real_courier._id,@account._id,carts,end_node[courier_index_2],stores)
                 end
           else
                 real_courier=employee[courier_index]
-                CourierOrder.create_order(work_store_nodes[courier_index],real_courier._id,@account._id,carts,end_node[courier_index],customer_node)
+                CourierOrder.create_order(work_store_nodes[courier_index],real_courier._id,@account._id,carts,end_node[courier_index],stores)
           end
        else
             "快递员还没上班".to_json
