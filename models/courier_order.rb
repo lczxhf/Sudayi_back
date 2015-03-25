@@ -15,24 +15,22 @@ class CourierOrder
   field :level,:type=>Integer,:default=>0                                    #订单的等级
  
 
- def self.get_node_time(store_nodes,node,cart_arr)                 #获取从某个区到n个仓库的最快路线
+ def self.get_node_time(stores,node,cart_arr)                 #获取从某个区到n个仓库的最快路线
       first_node = node
-      new_store_nodes=[]
-      new_store_nodes<<0
+      new_store=[]
+      new_store<<0
       new_cart=[]
-      a=store_nodes.size
-      (a-2).times do 
+      a=stores.size
+      (a-1).times do 
           time=111111111111
           node_index=0
           arr_index=-1
-          b=store_nodes.size
-          store_nodes.dup.each_with_index do |store_node,index|
-              if index==b-1
-                    break
-              elsif store_node.class.name=='Array'
+          b=stores.size
+          stores.dup.each_with_index do |store,index|
+              if store.class.name=='Array'
                     store_time=[]
-                    store_node.each_with_index do |arr,index_arr|
-                          node_way<< NodeWay.where(node_id:first_node,tonode:arr).first.time
+                    store.each_with_index do |arr,index_arr|
+                          node_way<< NodeWay.where(node_id:first_node,tonode:arr.store_address.node._id).first.time
                           time = node_way if node_way < time
                           arr_index = index_arr if node_way < time
                     end
@@ -40,15 +38,14 @@ class CourierOrder
                           node_index=index
                     end
               else
-                      node_way = NodeWay.where(node_id:first_node,tonode:store_node).first.time
+                      node_way = NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time
                       time = node_way if node_way < time
                       node_index = index if node_way < time
               end
           end
-          middle_store
+
           if arr_index!=-1
-                real_node=store_nodes[node_index][arr_index]
-                
+                real_node=stores[node_index][arr_index]
                 store_nodes[node_index]=real_node
                 arr_index=-1
           end

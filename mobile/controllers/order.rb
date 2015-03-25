@@ -15,12 +15,11 @@ post :create_order, :csrf_protection=>false do
           node = @account.courier_address.node._id                                      #获取配送商所在的区
           cart_arr = params[:cart].split(',')
           carts = []                          #存购物车对象的数组
-          store_nodes = []              #暂存要去的仓库的node_id数组
+      
           real_store_nodes = []      #存在把公司作为始发点的话,怎样的路线花费的时间最短
           work_store_nodes={}       #存身上有单的快递员在完成了订单后送去客户,怎样的路线花费的时间最短
           end_node={}                   #快递员最后一张单结束时的所在区
           stores=[]                             #中间变量
-          store_ids=[]
           stores_hash={}
           cart_hash={}
           cart_arr.each do |cart_id|
@@ -43,65 +42,63 @@ post :create_order, :csrf_protection=>false do
                if product_stores.size==1
                       stores<<product_stores[0]                                          #把仓库加到暂存变量
                else
-                      arr=[]
-                      product_stores.each do |product_store|
-                            arr<<product_store
-                      end
-                      stores<<arr                                                                    #把仓库数组加到暂存变量
+                      stores<<product_stores                                                                    #把仓库数组加到暂存变量
                end
           end
-          stores.uniq                                                                                 #删除暂存变量里相同的仓库
+
           stores.dup.each_with_index do |store,index|
                 if store.class.name=='Array'                                                         #判断暂存变量里的某一个元素是不是数组
                       is_add=false
-                      store_arr=[]
+                      
                       store.each_with_index do |arr,arr_index|
                             if !stores.include?(arr)                                              #判断数组里的仓库和暂存变量里的仓库有没有相同
-                                  store_arr<<arr.store_address.node._id
+                                  
                                   stores.each do |a|
                                     if a.class.name!="Array"
                                         if a.store_address.node._id==arr.store_address.node._id    #判断数组里的仓库的所在区有没有和暂存变量里的仓库的所在区相同
-                                                store_nodes<<arr.store_address.node._id
-                                                #stores[index]=arr
-                                                store_ids<<arr._id
+                                                stores[index]=arr
                                                 is_add=true
                                                 return
                                         end
                                     end
                                   end
-                                  if is_add                                                               #判断数组里的仓库有没有被加到store_nodes里
-                                        return
-                                  end
                             else
-                                    #stores.delete(store)
                                     cart_arr[stores.index(arr)]+=",#{cart_arr[index]}"
-                                    cart_arr.delete_at(index)
+                                    cart_arr[index]=nil
+                                    stores.delete(store)
                                     is_add=true
-                                    return
+                            end
+                            if is_add                                                               #判断数组里的仓库有没有被加到store_nodes里
+                                   return
                             end
                       end
-                      if !is_add                                                                        
-                            store_nodes<<store_arr                                        #如果没添加就把仓库所在区数组加到store_nodes里
-                            store_ids<<store.collection{|q| q._id}
-                      end
                 else
-                      store_nodes<< store.store_address.node._id
-                      store_ids<<store._id
+                      if index!=0
+                            index.downto(1) do |a|
+                                  if store==stores[a-1]
+                                        stores.delete(store)
+                                        cart_arr[a-1]+=",#{cart_arr[index]}"
+                                        cart_arr[index]=nil
+                                        return
+                                  end
+                            end
+                      end
                 end
                
           end
+          cart_arr=cart_arr.compact
           customer_node=carts[0].customer_account.address.node._id   #获取客户所在的区
-          store_nodes<<customer_node
-          if store_nodes.size==2                               #判断这张订单是不是只需要去一个仓库
-              real_store_nodes << NodeWay.where(node_id:node,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
-              real_store_nodes << store_nodes[0]
-              real_store_nodes<<customer_node
-              #stores_hash["company"]=stores
+
+          if stores.size==1                               #判断这张订单是不是只需要去一个仓库
+              real_store << NodeWay.where(node_id:node,tonode:stores[0].address.node._id).first.time+NodeWay.where(node_id:stores[0].address.node._id,tonode:customer_node).first.time
+              real_store << stores[0]
+              real_store<<customer_node
+              cart_hash["company"]=cart_arr
+              
           else
-              real_store_nodes,a = CourierOrder.get_node_time(store_nodes.dup,node,cart_arr.dup)
+              real_store,a = CourierOrder.get_node_time(stores.dup,node,cart_arr.dup)
               cart_hash["company"]=a
-              #stores_hash["company"]=a
-              #real_store_nodes[0]+=NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
+            
           end
 
           # 以下是计算身上有接单的快递员去派送此单所需的时间
