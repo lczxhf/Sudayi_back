@@ -20,7 +20,9 @@ post :create_order, :csrf_protection=>false do
           work_store_nodes={}       #存身上有单的快递员在完成了订单后送去客户,怎样的路线花费的时间最短
           end_node={}                   #快递员最后一张单结束时的所在区
           stores=[]                             #中间变量
+          store_ids=[]
           stores_hash={}
+          cart_hash={}
           cart_arr.each do |cart_id|
                cart = Cart.find(cart_id)                                        #获取客户要购买的购物车对象 把它们加入数组
                carts<<cart
@@ -49,7 +51,7 @@ post :create_order, :csrf_protection=>false do
                end
           end
           stores.uniq                                                                                 #删除暂存变量里相同的仓库
-          stores.dup.each_with_index do |store,index|                                                            #遍历仓库
+          stores.dup.each_with_index do |store,index|
                 if store.class.name=='Array'                                                         #判断暂存变量里的某一个元素是不是数组
                       is_add=false
                       store_arr=[]
@@ -60,7 +62,8 @@ post :create_order, :csrf_protection=>false do
                                     if a.class.name!="Array"
                                         if a.store_address.node._id==arr.store_address.node._id    #判断数组里的仓库的所在区有没有和暂存变量里的仓库的所在区相同
                                                 store_nodes<<arr.store_address.node._id
-                                                stores[index]=arr
+                                                #stores[index]=arr
+                                                store_ids<<arr._id
                                                 is_add=true
                                                 return
                                         end
@@ -70,16 +73,20 @@ post :create_order, :csrf_protection=>false do
                                         return
                                   end
                             else
-                                    stores.delete(store)
+                                    #stores.delete(store)
+                                    cart_arr[stores.index(arr)]+=",#{cart_arr[index]}"
+                                    cart_arr.delete_at(index)
                                     is_add=true
                                     return
                             end
                       end
                       if !is_add                                                                        
                             store_nodes<<store_arr                                        #如果没添加就把仓库所在区数组加到store_nodes里
+                            store_ids<<store.collection{|q| q._id}
                       end
                 else
                       store_nodes<< store.store_address.node._id
+                      store_ids<<store._id
                 end
                
           end
@@ -89,10 +96,11 @@ post :create_order, :csrf_protection=>false do
               real_store_nodes << NodeWay.where(node_id:node,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
               real_store_nodes << store_nodes[0]
               real_store_nodes<<customer_node
-              stores_hash["company"]=stores
+              #stores_hash["company"]=stores
           else
-              real_store_nodes,a = CourierOrder.get_node_time(store_nodes.dup,node,stores.dup)
-              stores_hash["company"]=a
+              real_store_nodes,a = CourierOrder.get_node_time(store_nodes.dup,node,cart_arr.dup)
+              cart_hash["company"]=a
+              #stores_hash["company"]=a
               #real_store_nodes[0]+=NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time
           end
 
@@ -108,7 +116,8 @@ post :create_order, :csrf_protection=>false do
                         work_store_nodes[index]=temp_store_nodes
                         temp_store_nodes=[]
                         end_node<<node._id
-                        stores_hash[index]=stores_hash["company"].dup
+                        cart_hash[index]=cart_hash["company"]
+                        #stores_hash[index]=stores_hash["company"].dup
                         next
                     else
                         order=courier_order.orders.desc(:level).first
@@ -121,14 +130,16 @@ post :create_order, :csrf_protection=>false do
                             if store_nodes[0]==end_node[index]
                                 temp_store_nodes << "相同区"
                             end
-                            stores_hash[index]=stores
+                            #stores_hash[index]=stores
+                            cart_hash[index]=cart_arr
                       else
-                          temp_store_nodes,b = CourierOrder.get_node_time(store_nodes.dup,end_node[index],stores.dup)
+                          temp_store_nodes,b = CourierOrder.get_node_time(store_nodes.dup,end_node[index],cart_arr.dup)
                           temp_store_nodes[0]+=NodeWay.where(node_id:store_nodes[0],tonode:customer_node).first.time+(employee.whenfree.to_i-Time.now.to_i)/60
                           if end_node[index]==temp_store_nodes[1]
                             temp_store_nodes<<"相同区"
                           end
-                           stores_hash[index]=b
+                           #stores_hash[index]=b
+                           cart_hash[index]=b
                       end
                     work_store_nodes[index]=temp_store_nodes
                     temp_store_nodes=[]
@@ -154,14 +165,14 @@ post :create_order, :csrf_protection=>false do
           if courier_index==-1       #courier_index如果是-1就代表在公司起送比较快
              real_courier=@account.courier_employees.where(is_work:true,isfree:true).first
                 if  real_courier  #判断配送商是否有正在待命的快递员
-                      CourierOrder.create_order(real_store_nodes,real_courier._id,@account._id,carts,node,stores)
+                      CourierOrder.create_order(real_store_nodes,real_courier._id,@account._id,carts,node,cart_hash["company"])
                 else
                       real_courier=employee[courier_index_2]
-                      CourierOrder.create_order(work_store_nodes[courier_index_2],real_courier._id,@account._id,carts,end_node[courier_index_2],stores_hash[courier_index_2])
+                      CourierOrder.create_order(work_store_nodes[courier_index_2],real_courier._id,@account._id,carts,end_node[courier_index_2],cart_hash[courier_index_2])
                 end
           else
                 real_courier=employee[courier_index]
-                CourierOrder.create_order(work_store_nodes[courier_index],real_courier._id,@account._id,carts,end_node[courier_index],stores_hash[courier_index])
+                CourierOrder.create_order(work_store_nodes[courier_index],real_courier._id,@account._id,carts,end_node[courier_index],cart_hash[courier_index])
           end
        else
             "快递员还没上班".to_json

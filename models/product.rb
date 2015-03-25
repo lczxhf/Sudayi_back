@@ -18,6 +18,8 @@ class Product
   field :validate_person,:type=>String                             #认证员
   field :pay_types,:type=>Array                                         #商品支持的支付方式
   field :tag,:type=>Array
+  field :is_up_shelve,:type=>Boolean,:default=>true
+  field :down_shelve_time,:type=>Integer,:default=>7
 
 def self.qcode(id)
     #二维码
