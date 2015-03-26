@@ -39,5 +39,10 @@ get :code_image do
   image=session[:noisy_image].image  
   image
 end  
-
+get :test do
+  a="123"
+  a.to_a
+  puts a
+  puts a.class
+  end
 end

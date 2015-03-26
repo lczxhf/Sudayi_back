@@ -7,6 +7,7 @@ class OrderTime
 
    field :store_time,:type=>DateTime                      #供应商确认时的时间
     field :interval_time,:type=>DateTime                 #订单间隔的准确时间
+    field :courier_time,:type=>DateTime
     field :store_vali_time,:type=>DateTime               #仓库验货结束的时间
     field :customer_time,:type=>DateTime                #客户验货结束的时间
     field :first_node_way_time,:type=>DateTime        #从出发区到仓库后的时间

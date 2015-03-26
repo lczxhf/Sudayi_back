@@ -7,6 +7,7 @@ class CourierOrder
   belongs_to :courier_employee                                              #订单的快递员id
   has_many :orders   
   has_one :back_order
+  belongs_to :error_info
   
   field :number,:type=>String                                                     #订单号
   field :iscomplete,:type=>Boolean,:default=>false                #订单是否完成
@@ -15,7 +16,7 @@ class CourierOrder
   field :level,:type=>Integer,:default=>0                                    #订单的等级
  
 
- def self.get_node_time(stores,node,cart_arr)                 #获取从某个区到n个仓库的最快路线
+ def self.get_node_time(stores,node,cart_arr,customer_node)                 #获取从某个区到n个仓库的最快路线
       first_node = node
       new_store=[]
       new_store<<0
@@ -25,44 +26,40 @@ class CourierOrder
           time=111111111111
           node_index=0
           arr_index=-1
-          b=stores.size
           stores.dup.each_with_index do |store,index|
               if store.class.name=='Array'
                     store_time=[]
                     store.each_with_index do |arr,index_arr|
                           node_way<< NodeWay.where(node_id:first_node,tonode:arr.store_address.node._id).first.time
-                          time = node_way if node_way < time
-                          arr_index = index_arr if node_way < time
-                    end
-                    if arr_index!=-1
-                          node_index=index
+                          time,arr_index,node_index = node_way,index_arr,index if node_way < time
+                         
                     end
               else
                       node_way = NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time
                       time = node_way if node_way < time
                       node_index = index if node_way < time
+                      arr_index=-1
               end
           end
 
           if arr_index!=-1
-                real_node=stores[node_index][arr_index]
-                store_nodes[node_index]=real_node
+                stores[node_index]=stores[node_index][arr_index]
                 arr_index=-1
           end
-          new_store_nodes<<store_nodes[node_index]
-          new_store_nodes[0]+=time
+          new_store<<stores[node_index]
+          new_store[0]+=time
           new_cart<<cart_arr[node_index]
-          first_node = store_nodes[node_index]
-          store_nodes.delete(store_node)
+          first_node = stores[node_index].store_address.node._id
+          stores.delete(store_node)
       end
-      new_store_nodes[0]+=NodeWay.where(node_id:new_store_nodes.last,tonode:store_nodes[0]).first.time+NodeWay.where(node_id:store_nodes[0],tonode:store_nodes.last).first.time
-      new_store_nodes<<store_nodes[0]
-      new_store_nodes<<store_nodes.last
-      return new_store_nodes,new_cart
+      new_store[0]+=NodeWay.where(node_id:new_store.last,tonode:stores[0].store_address.node._id).first.time+NodeWay.where(node_id:stores[0].store_address.node._id,tonode:customer_node).first.time
+      new_store<<stores[0]
+      new_store<<customer_node
+      return new_store,new_cart
  end
 
 #生成订单表
-def self.create_order(courier_nodes,employee_id,courier_account,carts,first_node,cart_arr)                                                #创建订单
+def self.create_order(courier_store,employee_id,courier_account,carts,first_node,cart_arr)                                                #创建订单
       courier_order=CourierOrder.new   
       employee=CourierEmployee.find(employee_id)   #获取快递员
       setting=OrderSetting.where(courier_account_id:courier_account).first #得到某个配送公司的时间设置表
@@ -73,34 +70,40 @@ def self.create_order(courier_nodes,employee_id,courier_account,carts,first_node
           end
       end
       courier_order.number=number
-      courier_order.usetime=courier_nodes[0]+OrderSetting.base_time(courier_account)+(courier_nodes.size-2)*setting.store_vali_time
+      courier_order.usetime=courier_store[0]+OrderSetting.base_time(courier_account)+(courier_nodes.size-2)*setting.store_vali_time
       courier_order.level=employee.courier_orders.max(:level)+1
       if courier_order.level==1
             courier_order.isnow=true
       end
       courier_order.courier_employee=employee
       other_time=0
-      courier_nodes.each_with_index do |node,index|
-           if index==0||index==courier_nodes.size-1
+      courier_store.each_with_index do |store,index|
+           if index==0||index==courier_store.size-1
                   next
            else
                   order=Order.new
                   order.level=index
-                  order.end_node=node
+                  order.end_node=store.store_address.node._id
                   order.order_type="取"
                   if index==1
-                     order.usetime=NodeWay.where(node_id:first_node,tonode:node).first.time+setting.store_time+setting.store_vali_time+setting.order_interval
+                     order.usetime=NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time+setting.store_time+setting.store_vali_time+setting.order_interval
                      order.first_node=first_node
                   else
-                      order.usetime=NodeWay.where(node_id:courier_nodes[index-1],tonode:node).first.time+setting.store_vali_time
-                      order.first_node=courier_nodes[index-1]
+                      order.usetime=NodeWay.where(node_id:courier_store[index-1].store_address.node._id,tonode:store.store_address.node._id).first.time+setting.store_vali_time
+                      order.first_node=courier_store[index-1].store_address.node._id
                    end
                    other_time+=order.usetime
                    carts.each_with_index do |cart,cart_index|
                         if cart_arr[index].include?(cart._id)
                             order.product_detail<<cart.product_detail._id
                             order.sum<<cart.sum
-                            product_store=cart.product_detail.product_stores.where(store_id:stores[index-1]._id).first
+                            if cart.product_detail
+                                cart.product_detail.each do |p|
+                                    order.product_detail<<p
+                                    order.sum<<1
+                                end
+                            end
+                            product_store=cart.product_detail.product_stores.where(store_id:store._id).first
                             product_store.reserve+=cart.sum
                             product_store.save
                             point=ProductPoint.where(courier_account_id:courier_account,product_id:cart.product_detail.product._id).first
@@ -115,9 +118,9 @@ def self.create_order(courier_nodes,employee_id,courier_account,carts,first_node
            end
       end
       send_order=Order.new
-      send_order.level=courier_nodes.size
-      send_order.first_node=courier_nodes.last
-      send_order.end_node=carts.first.customer_account.address.node._id
+      send_order.level=courier_store.size
+      send_order.first_node=courier_store[-2].store_address.node._id
+      send_order.end_node=courier_store.last
       send_order.order_type="送"
       send_order.usetime=courier_order.usetime-other_time
       carts.each do |cart|
