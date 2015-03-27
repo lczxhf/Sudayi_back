@@ -74,6 +74,8 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
       courier_order.level=employee.courier_orders.max(:level)+1
       if courier_order.level==1
             courier_order.isnow=true
+      else
+        courier_order.usetime+=setting.customer_vali_time
       end
       courier_order.courier_employee=employee
       other_time=0
@@ -88,6 +90,7 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
                   if index==1
                      order.usetime=NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time+setting.store_time+setting.store_vali_time+setting.order_interval
                      order.first_node=first_node
+                     
                   else
                       order.usetime=NodeWay.where(node_id:courier_store[index-1].store_address.node._id,tonode:store.store_address.node._id).first.time+setting.store_vali_time
                       order.first_node=courier_store[index-1].store_address.node._id

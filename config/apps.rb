@@ -39,4 +39,6 @@ Padrino.mount("SudayiBack::Admin", :app_file => Padrino.root('admin/app.rb')).to
 Padrino.mount('SudayiBack::MobileAdmin', :app_file => Padrino.root('mobile_admin/app.rb')).to('/mobile_admin')
 
 Padrino.mount('SudayiBack::Mobile', :app_file => Padrino.root('mobile/app.rb')).to('/mobile')
+
+Padrino.mount('SudayiBack::Courier', :app_file => Padrino.root('courier/app.rb')).to('/courier')
 Padrino.mount('SudayiBack::App', :app_file => Padrino.root('app/app.rb')).to('/')

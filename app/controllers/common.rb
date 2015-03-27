@@ -40,9 +40,8 @@ get :code_image do
   image
 end  
 get :test do
-  a="123"
-  a.to_a
-  puts a
-  puts a.class
+    a=Time.now
+    b=Time.now+5.minute
+    puts b-a
   end
 end

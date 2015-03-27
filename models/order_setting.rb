@@ -18,7 +18,7 @@ class OrderSetting
  end
  def  self.base_time(courier_account)
   setting=OrderSetting.where(courier_account_id:courier_account).first
-    time=setting.store_time+setting.order_interval+setting.store_vali_time
+    time=setting.store_time+setting.order_interval
     return time
  end
 end
