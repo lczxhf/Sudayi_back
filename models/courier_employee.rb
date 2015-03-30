@@ -12,7 +12,7 @@ class CourierEmployee
   field :whenfree,:type=>DateTime,:default=>''                 #快递员何时空闲
   field :number,:type=>String
   field :money,:type=>Float,:default=>0                               #快递员身上有多少钱
-  field :product_details,:type=>Array                                    #快递员身上有什么商品
+  field :product_details,:type=>Array,:default=>[]                                    #快递员身上有什么商品
   field :is_work,:type=>Boolean                                             #快递员是否上班了
  
  #验证

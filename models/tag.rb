@@ -5,5 +5,4 @@ class Tag
   belongs_to :state
 
 field :name,:type=>String
-
 end

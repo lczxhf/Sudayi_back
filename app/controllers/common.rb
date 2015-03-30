@@ -40,8 +40,12 @@ get :code_image do
   image
 end  
 get :test do
-    a=Time.now
-    b=Time.now+5.minute
-    puts b-a
-  end
+    tag=Tag.new
+    if tag.name.nil?
+      puts 'abc'
+    else
+      puts "cba"
+    end
+    tag.save
+end
 end

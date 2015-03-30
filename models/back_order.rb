@@ -12,8 +12,8 @@ class BackOrder
   field :isnow,:type=>Boolean,:default=>false           #是否现在执行 字段
   field :usetime,:type=>Integer,:default=>''                #订单将使用的时间(分钟)
   field :level,:type=>Integer,:default=>0                      #订单的排列的等级
-  field :product_detail,:type=>Array                             #执行此订单时 快递员携带的商品的规格id
-  field :sum,:type=>Array                                               #执行此订单时 快递员携带的某规格商品的数量
+  field :product_detail,:type=>Array,:default=>[]                             #执行此订单时 快递员携带的商品的规格id
+  field :sum,:type=>Array,:default=>[]                                               #执行此订单时 快递员携带的某规格商品的数量
   field :can_stop,:type=>Boolean,:default=>true       #回公司的单是否可以被中断
 
 end

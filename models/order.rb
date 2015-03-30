@@ -3,9 +3,8 @@ class Order
   include Mongoid::Timestamps 
   #取 送订单表
 
-  belongs_to :courier_order                                                     #快递员id
-  belongs_to :error_info                                                            
-  belongs_to :pay_type                                                                #支付方式
+  belongs_to :courier_order                                      #快递员id                                                            
+  belongs_to :pay_type                                           #支付方式
   belongs_to :store                                                          
 
   field :iscomplete,:type=>Boolean,:default=>false               #是否完成
@@ -13,9 +12,9 @@ class Order
   field :usetime,:type=>Integer,:default=>''                     #此订单使用时间
   field :level,:type=>Integer,:default=>0                        #订单的等级
   field :order_type,:type=>String                                #订单是取还是送
-  field :product_detail,:type=>Array                             #订单的商品的规格
-  field :discount,:type=>Array                                   #优惠券
-  field :sum,:type=>Array                                        #数量
+  field :product_detail,:type=>Array,:default=>[]                #订单的商品的规格
+  field :discount,:type=>Array,:default=>[]                      #优惠券
+  field :sum,:type=>Array,:default=>[]                            #数量
   field :first_node,:type=>String                                #始发区id
   field :end_node,:type=>String                                  #终点区id
 

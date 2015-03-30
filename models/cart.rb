@@ -11,7 +11,7 @@ class Cart
   field :sum,:type=>Integer
   field :message,:type=>String
   field :is_complete,:type=>Boolean,:default=>false
-  field :product_details,:type=>Array
+  field :product_details,:type=>Array,:default=>[]
 
 
 end

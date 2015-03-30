@@ -30,7 +30,7 @@ class CourierOrder
               if store.class.name=='Array'
                     store_time=[]
                     store.each_with_index do |arr,index_arr|
-                          node_way<< NodeWay.where(node_id:first_node,tonode:arr.store_address.node._id).first.time
+                          node_way = NodeWay.where(node_id:first_node,tonode:arr.store_address.node._id).first.time
                           time,arr_index,node_index = node_way,index_arr,index if node_way < time
                          
                     end
@@ -78,6 +78,7 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
         courier_order.usetime+=setting.customer_vali_time
       end
       courier_order.courier_employee=employee
+      courier_order.build_order_time(store_time:[courier_store.size-2])
       other_time=0
       courier_store.each_with_index do |store,index|
            if index==0||index==courier_store.size-1
@@ -98,14 +99,15 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
                    other_time+=order.usetime
                    carts.each_with_index do |cart,cart_index|
                         if cart_arr[index].include?(cart._id)
-                            order.product_detail<<cart.product_detail._id
-                            order.sum<<cart.sum
-                            if cart.product_detail
-                                cart.product_detail.each do |p|
-                                    order.product_detail<<p
-                                    order.sum<<1
-                                end
+                            pd_array=[]
+                            sum_array=[]
+                            pd_array<<cart.product_detail._id
+                            sum_array<<cart.sum
+                            if cart.product_detail.nil?
+                               pd_array+=cart.product_detail
                             end
+                            order.product_detail<<pd_array
+                            order.sum<<sum_array
                             product_store=cart.product_detail.product_stores.where(store_id:store._id).first
                             product_store.reserve+=cart.sum
                             product_store.save

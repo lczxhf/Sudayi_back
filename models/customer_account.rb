@@ -12,7 +12,7 @@ class CustomerAccount
    field :level,:type=>Integer
    field :mobile,:type=>String
    field :email,:type=>String
-   field :other_address,:type=>Array                                      #客户的其他地址
+   field :other_address,:type=>Array,:default=>[]                                 #客户的其他地址
 
 #验证
   validates_presence_of     :mobile, :level
