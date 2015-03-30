@@ -34,7 +34,7 @@ post :create_order, :csrf_protection=>false do
                           if product_store.amount-product_store.reserve<=0     
                                 render :html,"#{cart.product_detail.product.name}没有库存了"
                           end
-                          if cart.product_details
+                          if !cart.product_details.nil?
                                 cart.product_details.each do |a|
                                   bring_3=ProductStore.where(store_id:product_store.store._id,product_detail_id:a).first
                                   if bring_3
@@ -55,7 +55,7 @@ post :create_order, :csrf_protection=>false do
                                 product_stores.delete(product_store)
                                 next
                           end
-                          if cart.product_details
+                          if !cart.product_details.nil?
                                 cart.product_details.each do |a|
                                   bring_3=ProductStore.where(store_id:product_store.store._id,product_detail_id:a).first
                                   if bring_3

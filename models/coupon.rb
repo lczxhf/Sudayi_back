@@ -6,6 +6,7 @@ class Coupon
 
   field :discount,:type=>Float
   field :message,:type=>String
+  field :start_date,:type=>DateTime
   field :end_date,:type=>DateTime
 
 end

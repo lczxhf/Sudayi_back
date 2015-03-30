@@ -7,7 +7,7 @@ class Node
 
   field :name,:type=>String
   field :code,:type=>String
-  field :streets,:type=>Array
+  field :streets,:type=>Array,:default=>[]
 
 
  def self.get_node_way(node_id)
