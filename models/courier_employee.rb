@@ -14,7 +14,8 @@ class CourierEmployee
   field :money,:type=>Float,:default=>0                               #快递员身上有多少钱
   field :product_details,:type=>Array,:default=>[]                                    #快递员身上有什么商品
   field :is_work,:type=>Boolean                                             #快递员是否上班了
- 
+  field :end_node,:type=>String,:default=>""
+  field :my_account,:type=>String
  #验证
     validates_length_of            :email,    :within => 8..100
     validates_uniqueness_of   :email,    :case_sensitive => false

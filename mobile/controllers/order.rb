@@ -135,8 +135,10 @@ post :create_order, :csrf_protection=>false do
 
           # 以下是计算身上有接单的快递员去派送此单所需的时间
           employees = @account.courier_employees.where(is_work:true,isfree:false)
+          employees+= @account.courier_employees.where(is_work:true,isfree:true).ne(:end_node=>"")
           temp_store=[]
           employees.each_with_index do |employee,index|
+               if !employee.isfree
                     courier_order=employee.courier_orders.desc(:level).first
                     if courier_order.back_order               #判断快递员是否正在回公司路上
                         middle_time=((courier_order.back_order.created_at+courier_order.back_order.usetime.minute).to_i-Time.now.to_i)/60
@@ -170,6 +172,26 @@ post :create_order, :csrf_protection=>false do
                       end
                     work_store[index]=temp_store
                     temp_store=[]
+               else
+                  if stores.size==1
+                            temp_store << NodeWay.where(node_id:employee.end_node,tonode:stores[0].store_address.node._id).first.time+NodeWay.where(node_id:stores[0].store_address.node._id,tonode:customer_node).first.time
+                            temp_store << stores[0]
+                            temp_store << customer_node
+                            if stores[0].store_address.node._id==employee.end_node
+                                temp_store << "相同区"
+                            end
+                            cart_hash[index]=cart_arr
+                      else
+                          temp_store,b = CourierOrder.get_node_time(store_nodes.dup,employee.end_node,cart_arr.dup,customer_node)
+                          
+                          if employee.end_node==temp_store[1]
+                            temp_store<<"相同区"
+                          end
+                           cart_hash[index]=b
+                      end
+                    work_store[index]=temp_store
+                    temp_store=[]
+               end         
           end
           #判断各个快递员送此订单所需的时间,得到最快的
           courier_index=-1

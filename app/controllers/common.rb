@@ -40,12 +40,8 @@ get :code_image do
   image
 end  
 get :test do
-    tag=Tag.new
-    if tag.name.nil?
-      puts 'abc'
-    else
-      puts "cba"
-    end
-    tag.save
-end
+    a=Account.where(name:"Foo").ne(:email=>"lczxhf@sina.com")
+    puts a.to_json
+    a
+  end
 end
