@@ -55,14 +55,17 @@ SudayiBack::Mobile.controllers :welcome do
             Store.in(:store_address_id=>store_address).where(is_open:true)
         end 
         product_result=[]
-        
+        product_cache=ProductCache.new
+        product_cache.node_id=params[:node_id]
         stores.each do |store|
             if store.class.name=="Array"
                 store.each do |a|
                     ProductStore.where(store_id:a._id,:amount.gt=>0).each do |b|
                         if b.amount-b.reserve>0
                             product_result<<b.product_detail.product
-                           
+                            if product_result.size>=page*size
+                                render :html,product_result.to_json
+                            end
                         end
                     end
                      
@@ -71,7 +74,9 @@ SudayiBack::Mobile.controllers :welcome do
                 ProductStore.where(store_id:store._id,:amount.gt=>0).each do |b|
                     if b.amount-b.reserve>0
                         product_result<<b.product_detail.product
-                        
+                        if product_result.size>=page*size
+                             render :html,product_result.to_json
+                        end
                     end
                 end
             end

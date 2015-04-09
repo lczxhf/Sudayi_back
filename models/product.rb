@@ -10,8 +10,8 @@ class Product
   has_many :image_items
   has_many :product_details
 
-
-   field :name, :type => String
+  field :number,:type=>String
+  field :name, :type => String
   field :description, :type => String                             #商品描述
   field :level,  :type => Integer                                 #商品等级
   field :is_bring_three,:type=>Boolean                            #是否支持以一携三

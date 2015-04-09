@@ -5,7 +5,8 @@ class Order
 
   belongs_to :courier_order                                      #快递员id                                                            
   belongs_to :pay_type                                           #支付方式
-  belongs_to :store                                                          
+  belongs_to :store   
+  belongs_to :store_employee                                                       
 
   field :iscomplete,:type=>Boolean,:default=>false               #是否完成
   field :isnow,:type=>Boolean,:default=>false                    #是否正在执行
@@ -17,7 +18,6 @@ class Order
   field :sum,:type=>Array,:default=>[]                            #数量
   field :first_node,:type=>String                                #始发区id
   field :end_node,:type=>String                                  #终点区id
-
 
 
 def  self.get_now_node (order_id)

@@ -7,6 +7,6 @@ class StoreEmployee
   
 
   field :is_work,:type=>Boolean
-
+  field :my_account,:type=>String
 
 end

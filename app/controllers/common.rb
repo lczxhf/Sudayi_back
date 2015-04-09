@@ -39,9 +39,6 @@ get :code_image do
   image=session[:noisy_image].image  
   image
 end  
-get :test do
-    a=Account.where(name:"Foo").ne(:email=>"lczxhf@sina.com")
-    puts a.to_json
-    a
-  end
+
+
 end
