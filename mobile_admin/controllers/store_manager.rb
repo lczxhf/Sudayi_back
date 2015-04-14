@@ -13,7 +13,7 @@ use Rack::Cors do
 
 post :new_store,:csrf_protection => false do
    if params[:url] && params[:warehouse_name] && params[:end_date] && params[:user_id] && params[:node_id] && params[:warehouse_addres]
-    if !Store.where(name:params[:warehouse_name]).first             #判断仓库名是否已经存在
+    if !Store.where(name:params[:warehouse_name]).first        #判断仓库名是否已经存在
      @store = Store.new
      @store.credit_url = params[:url]
      @store.name = params[:warehouse_name]

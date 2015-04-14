@@ -19,7 +19,9 @@ class Product
   field :pay_types,:type=>Array,:default=>[]                      #商品支持的支付方式
   field :tag,:type=>Array,:default=>[]
   field :is_up_shelve,:type=>Boolean,:default=>true
-  field :down_shelve_time,:type=>Integer,:default=>7
+  field :down_shelve_time,:type=>DateTime,default: ->{Time.now+7.day}
+  field :weight,:type=>Float
+  field :volume,:type=>Float
 
 def self.qcode(id)
     #二维码

@@ -14,7 +14,7 @@ class CourierOrder
   field :isnow,:type=>Boolean,:default=>false                         #订单是否正在执行
   field :usetime,:type=>Integer,:default=>''                              #完成订单预计使用时间
   field :level,:type=>Integer,:default=>0                                    #订单的等级
- 
+  field :start_time,:type=>DateTime
 
  def self.get_node_time(stores,node,cart_arr,customer_node)                 #获取从某个区到n个仓库的最快路线
       first_node = node
@@ -70,15 +70,17 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
           end
       end
       courier_order.number=number
-      courier_order.usetime=courier_store[0]+OrderSetting.base_time(courier_account)+(courier_nodes.size-2)*setting.store_vali_time
+      courier_order.usetime=courier_store[0]+setting.store_time+(courier_nodes.size-2)*setting.store_vali_time
       courier_order.level=employee.courier_orders.max(:level)+1
       if courier_order.level==1
             courier_order.isnow=true
+            courier_order.start_time=Time.now
       else
         courier_order.usetime+=setting.customer_vali_time
+        courier_order.start_time=employee.whenfree+setting.order_interval.minute
       end
       courier_order.courier_employee=employee
-      courier_order.build_order_time(store_time:[courier_store.size-2])
+      courier_order.create_order_time(store_time:[courier_store.size-2],)
       other_time=0
       courier_store.each_with_index do |store,index|
            if index==0||index==courier_store.size-1
@@ -141,9 +143,9 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
       send_order.save
       if employee.isfree
             employee.isfree=false
-            employee.whenfree=Time.now+courier_order.usetime.minute+setting.customer_vali_time.minute
+            employee.whenfree=Time.now+courier_order.usetime.minute+setting.customer_vali_time.minute+setting.order_interval.minute
       else
-            employee.whenfree+=courier_order.usetime.minute+setting.customer_vali_time.minute
+            employee.whenfree+=courier_order.usetime.minute+setting.customer_vali_time.minute+setting.order_interval.minute
       end
       employee.save
       return courier_order.usetime

@@ -40,5 +40,13 @@ get :code_image do
   image
 end  
 
+get :test do
+    if 1>0
+        abc=3
+    else
+        abc=2
+    end
+    puts abc
+end
 
 end

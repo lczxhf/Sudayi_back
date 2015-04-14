@@ -8,6 +8,6 @@ class ProductStore
 
   field :amount,:type=>Integer                        #数量
   field :reserve,:type=>Integer,:default=>0             #被预定的数量
-
+  field :is_up_shelve,:type=>Boolean,:default=>true
 
 end

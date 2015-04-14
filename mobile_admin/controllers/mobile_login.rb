@@ -7,6 +7,12 @@ SudayiBack::MobileAdmin.controllers :mobile_login do
     resource '*', :headers => :any, :methods => [:get, :post, :options]
   end
  end 
+
+ before do
+    if params[:is_pc]
+       @is_pc=true
+    end
+ end
  
  #登陆
  get :get_account do
@@ -18,7 +24,11 @@ SudayiBack::MobileAdmin.controllers :mobile_login do
      if  @account
          @account.to_json
      else
-       "密码或手机 错误".to_json
+       if @is_pc
+         
+       else
+        "密码或手机错误".to_json
+       end
      end
  end
 

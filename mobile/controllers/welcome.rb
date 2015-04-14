@@ -60,9 +60,10 @@ SudayiBack::Mobile.controllers :welcome do
         stores.each do |store|
             if store.class.name=="Array"
                 store.each do |a|
-                    ProductStore.where(store_id:a._id,:amount.gt=>0).each do |b|
+                    ProductStore.where(store_id:a._id,:amount.gt=>0,is_up_shelve:true).each do |b|
                         if b.amount-b.reserve>0
                             product_result<<b.product_detail.product
+                            product_result.uniq!
                             if product_result.size>=page*size
                                 render :html,product_result.to_json
                             end
@@ -71,9 +72,10 @@ SudayiBack::Mobile.controllers :welcome do
                      
                 end
             else
-                ProductStore.where(store_id:store._id,:amount.gt=>0).each do |b|
+                ProductStore.where(store_id:store._id,:amount.gt=>0,is_up_shelve:true).each do |b|
                     if b.amount-b.reserve>0
                         product_result<<b.product_detail.product
+                        product_result.uniq!
                         if product_result.size>=page*size
                              render :html,product_result.to_json
                         end
@@ -85,6 +87,7 @@ SudayiBack::Mobile.controllers :welcome do
     else
         arr=product_cache.name.split(",")
         page*size
+        
     end
  end
 
