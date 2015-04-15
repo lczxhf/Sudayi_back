@@ -41,12 +41,9 @@ get :code_image do
 end  
 
 get :test do
-    if 1>0
-        abc=3
-    else
-        abc=2
-    end
-    puts abc
+    arr=[]
+    arr[3]=1
+    puts arr.include?(nil)
 end
 
 end

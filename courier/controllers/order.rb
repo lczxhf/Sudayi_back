@@ -4,7 +4,7 @@ get :courier_vali do
     courier_order=CourierOrder.find(params[:order_id])
     courier_order.order_time.courier_time=Time.now
     number=courier_order.order_time.store_time[0]
-    if number==(courier_order.order_time.store_time.size-1)
+    if number==(courier_order.order_time.store_time.size-1)&&!courier_order.order_time.store_time.include?(nil)
         order=courier_order.orders.asc(:level).first
         order.isnow=true
         order.save
@@ -21,32 +21,52 @@ get :break_order do
     setting=OrderSetting.where(courier_account:params[:account]).first
     employee=courier_order.courier_employee
     courier_order.iscomplete=true
-    courier_order.level=0
+ #   courier_order.level=0
+    end_node=""
     if params[:type]=="first"
         error_info.courier_employee=employee
         reduce_time=courier_order.usetime-(Time.now-courier_order.created_at)/60+setting.order_interval
+        if courier_order.isnow
+            end_node=courier_order.orders.asc(:level).first.first_node
+        else
+            end_node=CourierOrder.where(level:courier_order.level-1).first.orders.desc(:level).first.end_node
+        end
     elsif params[:type]=="store"
         error_info.store_id=params[:store]
         reduce_time=courier_order.usetime-(Time.now-courier_order.start_time)/60+courier_order.order_time.time_diff
+        end_node=Store.find(params[:store]).store_address.node._id
     else
         error_info.customer_account_id=params[:customer_id]
-        reduce_time=courier_order.usetime-(Time.now-courier_order.start_time)/60+courier_order.order_time.time_diff
+        reduce_time=0
     end
+
     other_order=employee.courier_orders.where(:level.gt=>courier_order.level)
     if other_order.size>=1
-        employee.whenfree-=(reduce_time+setting.customer_vali_time).minute
         other_order.each do |order|
             order.level-=1
-            order.start_time-=reduce_time
+            
             if order.level==1
                 order.isnow=true
+                if reduce_time!=0
+                    node=order.orders.asc(:level).first.first_node
+                    new_time=NodeWay.where(node_id:end_node,tonode:node).first.time
+                    old_time=NodeWay.where(node_id:courier_order.orders.desc(:level).first.end_node,tonode:node).first.time
+                    reduce_time=reduce_time-old_time+new_time
+                end
             end
+            order.start_time-=reduce_time.minute
             order.save
         end
+        employee.whenfree-=reduce_time.minute
+        if reduce_time!=0
+            employee-=setting.customer_vali_time.minute
+        end
+    
     else
         employee.isfree=true
     end 
-    
+    courier_order.level=0
+    courier_order.isnow=false
     error_info.save
     courier_order.save
     employee.save

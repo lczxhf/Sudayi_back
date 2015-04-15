@@ -6,7 +6,7 @@ class Order
   belongs_to :courier_order                                      #快递员id                                                            
   belongs_to :pay_type                                           #支付方式
   belongs_to :store   
-  belongs_to :store_employee                                                       
+  belongs_to :store_employee                                                        
 
   field :iscomplete,:type=>Boolean,:default=>false               #是否完成
   field :isnow,:type=>Boolean,:default=>false                    #是否正在执行
