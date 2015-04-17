@@ -8,14 +8,15 @@ class CourierOrder
   has_many :orders   
   has_one :back_order
   belongs_to :error_info
-  
+  belongs_to :address
+  belongs_to :customer_account
+
   field :number,:type=>String                                                     #订单号
   field :iscomplete,:type=>Boolean,:default=>false                #订单是否完成
   field :isnow,:type=>Boolean,:default=>false                         #订单是否正在执行
   field :usetime,:type=>Integer,:default=>''                              #完成订单预计使用时间
   field :level,:type=>Integer,:default=>0                                    #订单的等级
   field :start_time,:type=>DateTime
-
  def self.get_node_time(stores,node,cart_arr,customer_node)                 #获取从某个区到n个仓库的最快路线
       first_node = node
       new_store=[]
@@ -70,6 +71,8 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
           end
       end
       courier_order.number=number
+      courier_order.customer_account=carts.first.customer_account
+      courier_order.address=courier_order.customer_account.address
       courier_order.usetime=courier_store[0]+setting.store_time+(courier_nodes.size-2)*setting.store_vali_time
       courier_order.level=employee.courier_orders.max(:level)+1
       if courier_order.level==1
@@ -89,13 +92,15 @@ def self.create_order(courier_store,employee_id,courier_account,carts,first_node
                   order=Order.new
                   order.level=index
                   order.end_node=store.store_address.node._id
+                  order.store=store
+                  order.store_address=store.store_address
                   order.order_type="取"
                   if index==1
-                     order.usetime=NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time+setting.store_time+setting.store_vali_time+setting.order_interval
+                     order.usetime=NodeWay.where(node_id:first_node,tonode:store.store_address.node._id).first.time+setting.store_time+setting.store_vali_time
                      order.first_node=first_node
                      
                   else
-                      order.usetime=NodeWay.where(node_id:courier_store[index-1].store_address.node._id,tonode:store.store_address.node._id).first.time+setting.store_vali_time
+                      order.usetime=NodeWay.where(node_id:courier_store[index-1].store_address.node._id,tonode:store.store_address.node._id).first.time+other_time
                       order.first_node=courier_store[index-1].store_address.node._id
                    end
                    other_time+=order.usetime

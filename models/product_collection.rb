@@ -4,7 +4,7 @@ class ProductCollection
   #收藏商品表
 
   belongs_to :product                                         #商品id
-  has_many :customer_account                        #客户id
+  belongs_to :customer_account                        #客户id
 
    field :message,:type=>String                             #备注
   

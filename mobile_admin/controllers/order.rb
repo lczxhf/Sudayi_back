@@ -9,8 +9,8 @@ get :store_vali do
         order.isnow=true
         order.save
     end
-    courier_order.order_time.save 
 end
   
+
 
 end
