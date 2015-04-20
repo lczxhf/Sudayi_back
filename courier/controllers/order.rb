@@ -81,8 +81,10 @@ get :store_vali do
    if params[:number].to_i==(params.size-1)/2
     order=Order.find(params[:order_id])
     courier_order=order.courier_order
-    employee=order.courier_order.courier_employee
+    employee=courier_order.courier_employee
     employee.end_node=order.store_address.node
+    employee.product_details+=order.product_detail
+    employee.sum+=order.sum
     next_order=courier_order.orders.where(level:order.level+1).first
     order.isnow=false
     if next_order
@@ -119,6 +121,33 @@ end
 get :customer_vali do
     order=Order.find(params[:order_id])
     courier_order=order.courier_order
+    employee=courier_order.courier_employee
+    order.iscomplete=true
+    order.isnow=false
+    courier_order.iscomplete=true
+    courier_order.isnow=false
+    other_orders=employee.courier_orders.where(:level.gt=>courier_order.level)
+    if !other_orders.empty?
+        other_orders.each do |other_order|
+            other_order.level-=1
+            if other_order.level==1
+                other_order.isnow=true
+                a=other_order.orders.asc(:level).first
+                a.isnow=true
+                a.save
+            end
+            other_order.save
+        end
+    else
+        employee.isfree=true
+        employee.whenfree=""
+    end
+    employee.end_node=order.end_node
+    courier_order.level=0
+    courier_order.save
+    employee.save
+    order.save
+
 
 end
 

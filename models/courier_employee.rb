@@ -13,6 +13,7 @@ class CourierEmployee
   field :number,:type=>String
   field :money,:type=>Float,:default=>0                               #快递员身上有多少钱
   field :product_details,:type=>Array,:default=>[]                                    #快递员身上有什么商品
+  field :sum,:type=>Array,:default=>[]
   field :is_work,:type=>Boolean                                             #快递员是否上班了
   field :end_node,:type=>String,:default=>""
   field :my_account,:type=>String

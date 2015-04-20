@@ -41,9 +41,10 @@ get :code_image do
 end  
 
 get :test do
-    arr=[]
-    arr[3]=1
-    puts arr.include?(nil)
+    a=[1,3,4]
+    b=[2,5,6]
+    a.concat b
+    puts a.inspect
 end
 
 end
