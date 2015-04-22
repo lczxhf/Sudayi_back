@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>订单详情</title>
+
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<%=stylesheet_link_tag "demo"%>
+</head>
+<body>
+	<h3><%=@account.real_name%></h3>
+	<div>
+		<ul class="nav nav-tabs">
+		  <li role="presentation" class="active"><a href="#">订单</a></li>
+		  <li role="presentation"><a href="product?id=<%=@account._id%>">商品</a></li>
+		  <li role="presentation"><a href="store?id=<%=@account._id%>">仓库</a></li>
+		  <li role="presentation"><a href="employee?id=<%=@account._id%>">员工</a></li>
+		</ul>
+
+		
+	</div>
+	<br>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation" class="active"><a href="page_main_order_new.html"><span>新订单 </span><em>(2)</em></a></li>
+		  <li role="presentation"><a href="page_main_order_ing.html"><span>进行中 </span><em>(1)</em></a></li>
+		  <li role="presentation"><a href="page_main_order_finish.html"><span>已完成 </span><em>(1)</em></a></li>
+		  <li role="presentation"><a href="page_main_order_return.html"><span>退货 </span><em>(2)</em></a></li>
+		  <li role="presentation"><a href="page_main_order_cancel.html"><span>已取消 </span><em>(3)</em></a></li>
+		</ul>
+	</div>
+	<br>
+	<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+		<br><br>
+		<p>请在<span style="color:red;">4:23</span>内确认以下订单，否则订单可能被自动取消！</p>
+		
+		<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+        	<ul class="list-unstyled" style="">
+		        <li style="font-weight:bold;">订单号： <span>020010100</span></li>
+		        <li style="font-weight:bold;">仓库： </li>
+		        <li style="font-weight:bold;">限时： </li>
+		        <li style="font-weight:bold;">距离当前： </li>
+        	</ul>
+        	<ul class="list-unstyled">
+		        <li style="font-weight:bold;">请准备以下资料的票据： </li>
+		        <li style="font-weight:bold;">收件人： </li>
+		        <li style="font-weight:bold;">商品： </li>
+		        <li style="font-weight:bold;">票据金额： </li>
+        	</ul>
+		</div>
+		<br>
+		<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+			<table class="table">
+			   <tbody>
+			     <tr>
+			       <td>1</td>
+			       <td><div><a href="#"><img src="u136.png" alt=""  width="50" height="50" /></a><h5>美丽衣服</h5><p>s码/红色/短袖春装</p></div></td>
+			       <td><a href="">查看</a></td>
+			       <td>零售价￥380</td>
+			       <td>扣点-￥114（30%）</td>
+			       <td>实收：￥266</td>
+			     </tr>
+			     <tr>
+			       <td>2</td>
+			       <td><a href="#"><img src="u136.png" alt=""  width="50" height="50" /></a><h5>美丽衣服</h5><p>s码/红色/短袖春装</p></td>
+			       <td><a href="">查看</a></td>
+			       <td>零售价￥380</td>
+			       <td>扣点-￥114（30%）</td>
+			       <td>实收：￥266</td>
+			     </tr>
+			   </tbody>
+			 </table>
+			 <p style="color:red;">建议您在手机上安装APP帮助您随时收到新订单！无视新订单确认程序将降低您的诚信度最终或导致被黑名单！</p>
+		</div>
+	</div>
+</body>
+</html>

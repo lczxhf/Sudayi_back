@@ -1,0 +1,6 @@
+/*高级*/
+.demo03{width: 460px;padding:20px;position: relative;background-color: #EEF7FF;border: 1px solid #CCC; margin-left:100px}
+.demo03 h6{ margin-bottom:5px}
+.demo03 .dialog p{text-indent: 2em; line-height:20px}
+.demo03 .userPic{ float:left; margin:-20px 0 0 -100px}
+.demo03 .pubTime{position:absolute; top:10px; right:20px; color:#999;}

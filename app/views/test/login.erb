@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>供应商登录页面</title>
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<%=javascript_include_tag "jquery-1.8.2.min"%>
+	<script type="text/javascript">
+		$(function(){
+			
+			$("#get_account").click(function(){
+				data= $("#my_form").serialize();
+				
+				$.post("/mobile_admin/mobile_login/get_account",data,function(obj){
+					if(obj._id){
+						location.href="/test/home?id="+obj._id;
+					}
+					else
+					{
+						alert(obj);
+					}
+				},"json")
+			})
+		});
+	</script>
+</head>
+<body>
+<div id="title">
+
+	<h3><span class="label label-info">速达易自物流后台管理</span></h3>
+
+	<a href="#" class="btn btn-primary">供应商登陆</a>
+	<a href="#" class="btn btn-default">配送商登陆</a>
+
+</div>
+<br />
+<div id="login"  class="form-group has-success">
+	<form method="post" action="save.rb" id="my_form">
+		<input type="hidden" name="account_type" value="supplier" />
+	    <label for="username" class="control-label" for="inputSuccess1">用户名:</label>
+	    <input type="text" name="mobile" />
+	    <label for="pass" class="control-label" for="inputWarning1">密码:</label>
+	    <input type="password" name="password" />
+	    <button type="button" class="btn btn-primary" id="get_account">登陆</button>
+	</form>
+
+</div>
+
+	
+</body>
+</html>

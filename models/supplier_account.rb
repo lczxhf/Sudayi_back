@@ -43,13 +43,13 @@ class SupplierAccount
   def has_password?(password)
     ::BCrypt::Password.new(crypted_password) == password
   end
-
   private
 #加密密码
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(self.password)
   end
 
+  
   def password_required
     crypted_password.blank? || self.password.present?
   end  

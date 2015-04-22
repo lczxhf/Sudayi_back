@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>订单详情</title>
+
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<%=stylesheet_link_tag "demo"%>
+</head>
+<body>
+	<h3><%=@account.real_name%></h3>
+	<div>
+		<ul class="nav nav-tabs">
+		  <li role="presentation"><a href="home?id=<%=@account._id%>">订单</a></li>
+		  <li role="presentation"><a href="product?id=<%=@account._id%>">商品</a></li>
+		  <li role="presentation" class="active"><a href="#">仓库</a></li>
+		  <li role="presentation"><a href="employee?id=<%=@account._id%>">员工</a></li>
+		</ul>
+
+		
+	</div>
+	<br>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation" class="active"><a href="page_main_repertory_list.html"><span>列表 </span></a></li>
+		  <li role="presentation"><a href="page_main_repertory_add.html"><span>添加 </span></a></li>
+		</ul>
+	</div>
+	<br>
+	<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+	  	<table class="table">
+	     <thead>
+	       <tr>
+	         <th>序号</th>
+	         <th>仓库名</th>
+	         <th>仓库地址</th>
+	         <th>仓库限期</th>
+	         <th>上架商品</th>
+	         <th>共有商品</th>
+	         <th>营业时间</th>
+	         <th>当前状态</th>
+	         <th>操作</th>
+	      </tr>
+	     </thead>
+	     <tbody>
+	       <tr>
+	         <td>01</td>
+	         <td>超级小店</td>
+	         <td><p style="font-weight:bold;">深圳罗湖</p>上步路2888号美丽小区9栋812</td>
+	         <td>20150402</td>
+	         <td>300</td>
+	         <td>800</td>
+	         <td>0830-2200</td>
+	         <td>
+	          <form action="save.php" method="post" >
+	            <label></label>
+	            <select>
+	              <option value="上架中">上架中</option>
+	              <option value="已下架">已下架</option>
+	            </select>
+	          </form>
+	         </td>
+	         <td>
+	         	<ul class="list-inline">
+					<li><a href="">申请延期</a></li>
+					<li><a href="">管理商品</a></li>
+					<li><a href="">删除仓库</a></li>
+					<li><a href="">上传商品</a></li>
+				</ul>
+	         </td>
+	       </tr>
+	       <tr>
+	         <td>02</td>
+	         <td>美丽佳人</td>
+	         <td><p style="font-weight:bold;">深圳福田</p>皇岗中心路999号世纪中心地下
+202铺</td>
+	         <td>20150402</td>
+	         <td>300</td>
+	         <td>1200</td>
+	         <td>0830-2200</td>
+	         <td>
+	          <form action="save.php" method="post" >
+	            <label></label>
+	            <select>
+	              <option value="上架中">上架中</option>
+	              <option value="已下架">已下架</option>
+	            </select>
+	          </form>
+	         </td>
+	         <td>
+	         	<ul class="list-inline">
+					<li><a href="">申请延期</a></li>
+					<li><a href="">管理商品</a></li>
+					<li><a href="">删除仓库</a></li>
+					<li><a href="">上传商品</a></li>
+				</ul>
+	         </td>
+	       </tr>
+	     </tbody>
+	    </table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>订单详情</title>
+
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <%=stylesheet_link_tag "demo"%>
+</head>
+<body>
+	<h3><%=@account.real_name%></h3>
+	<div>
+		<ul class="nav nav-tabs">
+		  <li role="presentation"><a href="home?id=<%=@account._id%>">订单</a></li>
+		  <li role="presentation" class="active"><a href="#">商品</a></li>
+		  <li role="presentation"><a href="store?id=<%=@account._id%>">仓库</a></li>
+		  <li role="presentation"><a href="employee?id=<%=@account._id%>">员工</a></li>
+		</ul>
+
+		
+	</div>
+	<br>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation" class="active"><a href="page_main_product_list.html"><span>列表 </span></a></li>
+		  <li role="presentation"><a href="page_main_product_upload.html"><span>上传 </span></a></li>
+		  <li role="presentation"><a href="page_main_product_tag.html"><span>标签 </span></a></li>
+		</ul>
+	</div>
+	<br>
+	<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+  	<table class="table">
+     <thead>
+       <tr>
+         <th>勾选</th>
+         <th>上架</th>
+         <th>货号</th>
+         <th>等级</th>
+         <th>商品</th>
+         <th>零售价</th>
+         <th>评价</th>
+         <th>当前状态</th>
+         <th>自动下架时间</th>
+      </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td><form action="save.rb" method="post" ><input type="checkbox" value="2"  name="" /></form></td>
+         <td>201503071233</td>
+         <td>0101018888</td>
+         <td>A级</td>
+         <td>美丽裙子</td>
+         <td>￥380</td>
+         <td>97%好评</td>
+         <td>
+          <form action="save.php" method="post" >
+            <label></label>
+            <select>
+              <option value="上架中">上架中</option>
+              <option value="已下架">已下架</option>
+            </select>
+          </form>
+         </td>
+         <td>201503071233</td>
+       </tr>
+       <tr>
+         <td><form action="save.rb" method="post" ><input type="checkbox" value="2"  name="" /></form></td>
+         <td>201503071233</td>
+         <td>0101018888</td>
+         <td>A级</td>
+         <td>美丽裙子</td>
+         <td>￥380</td>
+         <td>97%好评</td>
+         <td>
+          <form action="save.php" method="post" >
+            <label></label>
+            <select>
+              <option value="上架中">上架中</option>
+              <option value="已下架">已下架</option>
+            </select>
+          </form>
+         </td>
+         <td>201503071233</td>
+       </tr>
+     </tbody>
+    </table>
+	</div>
+</body>
+</html>

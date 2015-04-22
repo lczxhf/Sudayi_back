@@ -83,8 +83,8 @@ get :store_vali do
     courier_order=order.courier_order
     employee=courier_order.courier_employee
     employee.end_node=order.store_address.node
-    employee.product_details+=order.product_detail
-    employee.sum+=order.sum
+    employee.product_details+=order.product_detail.flatten
+    employee.sum+=order.sum.flatten
     next_order=courier_order.orders.where(level:order.level+1).first
     order.isnow=false
     if next_order
@@ -143,6 +143,7 @@ get :customer_vali do
         employee.whenfree=""
     end
     employee.end_node=order.end_node
+    
     courier_order.level=0
     courier_order.save
     employee.save

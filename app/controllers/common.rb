@@ -39,12 +39,8 @@ get :code_image do
   image=session[:noisy_image].image  
   image
 end  
-
 get :test do
-    a=[1,3,4]
-    b=[2,5,6]
-    a.concat b
-    puts a.inspect
+  
 end
 
 end

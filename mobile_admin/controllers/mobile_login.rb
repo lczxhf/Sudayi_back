@@ -15,8 +15,9 @@ SudayiBack::MobileAdmin.controllers :mobile_login do
  end
  
  #登陆
- get :get_account do
+ post :get_account,:csrf_protection=>false do
    if params[:account_type]=='supplier'                                                #判断登陆的是供应商还是代理商
+      logger.info params
       @account = SupplierAccount.authenticate_mobile(params[:mobile], params[:password])    #调用model类的静态方法
    else
       @account = CourierAccount.authenticate_mobile(params[:mobile], params[:password])
