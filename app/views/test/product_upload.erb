@@ -1,0 +1,115 @@
+<% content_for :head do %>
+<%= javascript_include_tag "jquery-1.8.2.min" %>
+<script type="text/javascript">
+  $(function(){
+    
+    $(".nav-tabs li").removeClass("active");
+    $(".nav-tabs li :eq(1)").attr("class","active");
+  })
+</script>
+<% end %>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation"><a href="product?id=<%=@account._id%>"><span>列表 </span></a></li>
+		  <li role="presentation" class="active"><a href="#"><span>上传 </span></a></li>
+		  <li role="presentation"><a href="product_tag?id=<%=@account._id%>"><span>标签 </span></a></li>
+		</ul>
+	</div>
+	<br>
+	<div style="background-color: #f5f5f5;border:1px  solid  #333333;height:1200px;">
+		<h3 style="font-weight:bold;">选择图片等级</h3>
+		<form action="">
+			  <div class="form-group">
+			    <label class="radio-inline">
+			      <input type="radio"  value="option1" name="sex"><h4>A级图片组</h4>
+			      <p>至少<span style="color: red;">3张优质商品图片</span></p><p>在前列位置展示</p><p>展示频率最高约为B级的3倍</p>
+			      <input type="file" name="uploadFile" />
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio"  value="option1" name="sex"><h4>B级图片组</h4>
+			      <p>至少<span style="color: red;">1张优质商品图片</span></p><p>在前列位置展示</p><p>展示频率最高约为C级的3倍</p>
+			      <input type="file" name="uploadFile" />
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio"  value="option1" name="sex"><h4>C级图片组</h4>
+			      <p><span style="color: red;">随拍图片</span>即可上传</p><p>只会出现在搜索结果</p><p>展示频率低</p>
+			      <input type="file" name="uploadFile" />
+			    </label>
+			  </div>
+		</form>
+		<hr style="width:980px;height:1px;border:none;border-top:1px solid #555555;" />
+		<h3 style="font-weight:bold;">基本资料</h3>
+		<div>
+			<form action="save.php" method="post" >
+			    <div>
+				    <label for="username">商品名称</label>
+	        		<input type="text" name="username" />
+        		</div>
+        		<br>
+        		<div>
+				    <label></label>
+				    <textarea style="width:240px;height:80px;">在这里输入商品说明...</textarea>
+				    <input type="submit" value="确定"  name="submit" />
+				    <input type="reset" value="重置"  name="reset" />
+			    </div>
+			       <div class="form-group">
+				      	<p>此商品将对客户提供以下票据<span>（至少提供一种票据）</span></p>
+					    <label class="radio-inline">
+					      <input type="radio"  value="option1" name="sex">增值税发票
+					    </label>
+					    <label class="radio-inline">
+					      <input type="radio"  value="option2" name="sex">普通发票
+					    </label>
+					    <label class="checkbox-inline">
+					      <input type="checkbox"  value="option3" name="sex">收据
+					    </label>
+					    <p style="color: red;width: 560px;font-size:11px;">速达易只提供商品配送服务，并不涉及客户与店家之间交易关系。赋税责任由店家自行承担；票据抬头必须为客户或收件地址而并非速达易。</p>
+				    </div>
+					<div>
+					    <label><h3 style="font-weight:bold;width:180px;">分类及标签:</h3></label>
+					    <select style="width:200px;">
+					      <option value="看书">女装</option>
+					      <option value="旅游">男装</option>
+					    </select>
+					</div>
+					<div align="center">
+						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+						<button class="btn btn-primary" type="button">取消</button>
+							<div class="modal" id="mymodal">
+							    <div class="modal-dialog">
+							        <div class="modal-content">
+							            <div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+											
+										</div>
+										<div class="modal-body">
+											<p>确认要放弃之前的编辑?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+											<button type="button" class="btn btn-primary">返回继续</button>
+										</div>
+									</div><!-- /.modal-content -->
+								</div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+						
+							<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+							<script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-transition.js"></script>
+							<script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-modal.js"></script>
+							<script>
+							  $(function(){
+							    $(".btn").click(function(){
+							      $("#mymodal").modal("toggle");
+							    });
+							  });
+							</script>
+						
+
+						<a href="page_main_product_upload_step01.html" class="btn btn-primary" role="button">下一步</a>
+					</div>
+			</form> 
+		</div>
+		<div>
+			
+		</div>
+	</div>

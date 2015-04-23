@@ -1,34 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>订单详情</title>
 
-	<!-- 新 Bootstrap 核心 CSS 文件 -->
-	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-	<%=stylesheet_link_tag "demo"%>
-</head>
-<body>
-	<h3><%=@account.real_name%></h3>
-	<div>
-		<ul class="nav nav-tabs">
-		  <li role="presentation" class="active"><a href="#">订单</a></li>
-		  <li role="presentation"><a href="product?id=<%=@account._id%>">商品</a></li>
-		  <li role="presentation"><a href="store?id=<%=@account._id%>">仓库</a></li>
-		  <li role="presentation"><a href="employee?id=<%=@account._id%>">员工</a></li>
-		</ul>
-
-		
-	</div>
-	<br>
 	<div >
 		<ul class="nav nav-pills">
-		  <li role="presentation" class="active"><a href="page_main_order_new.html"><span>新订单 </span><em>(2)</em></a></li>
-		  <li role="presentation"><a href="page_main_order_ing.html"><span>进行中 </span><em>(1)</em></a></li>
-		  <li role="presentation"><a href="page_main_order_finish.html"><span>已完成 </span><em>(1)</em></a></li>
-		  <li role="presentation"><a href="page_main_order_return.html"><span>退货 </span><em>(2)</em></a></li>
-		  <li role="presentation"><a href="page_main_order_cancel.html"><span>已取消 </span><em>(3)</em></a></li>
+		  <li role="presentation" class="active"><a href="home?id=<%=@account._id%>"><span>新订单 </span><em>(2)</em></a></li>
+		  <li role="presentation"><a href="now_order?id=<%=@account._id%>"><span>进行中 </span><em>(1)</em></a></li>
+		  <li role="presentation"><a href="complete_order?id=<%=@account._id%>"><span>已完成 </span><em>(1)</em></a></li>
+		  <li role="presentation"><a href="back_goods?id=<%=@account._id%>"><span>退货 </span><em>(2)</em></a></li>
+		  <li role="presentation"><a href="cancel_order?id=<%=@account._id%>"><span>已取消 </span><em>(3)</em></a></li>
 		</ul>
 	</div>
 	<br>
@@ -75,5 +52,3 @@
 			 <p style="color:red;">建议您在手机上安装APP帮助您随时收到新订单！无视新订单确认程序将降低您的诚信度最终或导致被黑名单！</p>
 		</div>
 	</div>
-</body>
-</html>
