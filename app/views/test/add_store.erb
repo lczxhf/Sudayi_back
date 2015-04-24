@@ -1,0 +1,322 @@
+<%content_for :head do%>
+<%= javascript_include_tag "jquery-1.8.2.min" %>
+ <script type="text/javascript">
+ $a=0
+ 	$(function(){
+ 		var arr=["deposit","firm_info","hire_info","myself_info"]
+ 		 $(".nav-tabs li").removeClass("active");
+    $(".nav-tabs li :eq(2)").attr("class","active");
+ 		$("#submit").click(function(){
+ 			type=arr[$a]
+ 			var date=$("#"+type).serialize()+"&store_url="+$("#"+type+" input[name='store_url']").val()+"&";
+ 			date+=$("#my_form").serialize();
+ 			date+="&type="+type;
+ 			if($a!=0){
+ 				date+="&"
+  				date+="&url="+$("#"+type+" input[name=url]").val();
+ 				date+="&url2="+$("#"+type+" input[name=url2]").val();
+ 				date+="&url3="+$("#"+type+" input[name=url3]").val();
+ 				date+="&url4="+$("#"+type+" input[name=url4]").val();
+ 			}
+ 			alert(date);
+ 			$.post("/mobile_admin/store_manager/new_store",date,function(abc){
+ 				alert(abc);
+ 			},"json")
+
+ 		})
+ 	})
+ 	function method01(){  
+	var mychar01 = document.getElementById("attestation01");
+	var mychar02 = document.getElementById("attestation02");
+	var mychar03 = document.getElementById("attestation03");
+	var mychar04 = document.getElementById("attestation04");
+
+	mychar01.style.display="block";
+	mychar02.style.display="none";
+	mychar03.style.display="none";
+	mychar04.style.display="none";
+	$a=0
+}
+
+function method02(){  
+	var mychar01 = document.getElementById("attestation01");
+	var mychar02 = document.getElementById("attestation02");
+	var mychar03 = document.getElementById("attestation03");
+	var mychar04 = document.getElementById("attestation04");
+
+	mychar01.style.display="none";
+	mychar02.style.display="block";
+	mychar03.style.display="none";
+	mychar04.style.display="none";
+	$a=1
+}
+
+function method03(){  
+	var mychar01 = document.getElementById("attestation01");
+	var mychar02 = document.getElementById("attestation02");
+	var mychar03 = document.getElementById("attestation03");
+	var mychar04 = document.getElementById("attestation04");
+
+	mychar01.style.display="none";
+	mychar02.style.display="none";
+	mychar03.style.display="block";
+	mychar04.style.display="none";
+	$a=2
+}
+
+function method04(){  
+	var mychar01 = document.getElementById("attestation01");
+	var mychar02 = document.getElementById("attestation02");
+	var mychar03 = document.getElementById("attestation03");
+	var mychar04 = document.getElementById("attestation04");
+
+	mychar01.style.display="none";
+	mychar02.style.display="none";
+	mychar03.style.display="none";
+	mychar04.style.display="block";
+	$a=3
+}
+ </script>
+<%end%>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation"><a href="store?id=<%=@account._id%>"><span>列表 </span></a></li>
+		  <li role="presentation" class="active"><a href="add_store?id=<%=@account._id%>"><span>添加 </span></a></li>
+		</ul>
+	</div>
+	<div>
+		<form action="" method="post" id="my_form">
+			<div>
+				<h4 style="font-weight:bold;">基本设定</h4>
+				<div style="position:relative;left:50px;top:5px;">
+					<ul class="list-unstyled">
+						<li><span style="font-weight:bold;">仓库名称：</span><input type="text" name="warehouse_name" placeholder="一般使用实体店名易于辨认" ></li>
+						<li><span style="font-weight:bold;">仓库地址：</span>
+						   <input type="hidden" name="user_id" value="<%=@account._id%>"/>
+	 					    <select name="node_id">
+	 					    <%@nodes.each do |node|%>
+						      <option value="<%=node._id%>"><%=node.name%></option>
+						    <%end%>
+						    </select>
+	 					    <label>区</label>
+	 					    <input type="text" name="details" placeholder="请输入具体地址" >
+	   					</li>
+						<li><span style="font-weight:bold;">负责人：</span><input type="text" name="m_name" placeholder="仓库实际联系人" >&nbsp&nbsp<input type="text" name="m_phone" placeholder="联系电话" ></li>
+						<li><span style="font-weight:bold;">每日可取件时间（营业时间）：</span><input type="text" name="first_time" placeholder="xxxx" ><span>到<input type="text" name="last_time" placeholder="xxxx" ></span></li>
+					</ul>
+				</div>
+				<hr style="width:1260px;height:1px;border:none;border-top:1px solid #555555;" />
+			</div>
+			</form>
+			<h4 style="font-weight:bold;">认证仓库</h4>
+			<div style="position:relative;left:50px;top:5px;">
+				<h4>认证方式：</h4>
+				<form id="deposit" method="post" enctype="multipart/form-data"><div style="width:120px;">
+					<div style="float:left;">
+						<label>
+			      			<input type="radio"  value="radio"  onclick="method01()">递交押金认证
+			      		</label>
+			      		<br><span style="position:relative;left:20px;top:4px;font-size:12px;">速达易需要认证您的地址达到极速配送的效率。</span>
+	            	</div>
+					<div id="attestation01">
+		            	<div style="position:relative;left:50px;top:18px;width:300px;height:250px;margin-left:100px;align:left;">
+		            		<h6 style="text-align:left;font-weight:bold;">缴交押金立即认证</h6>
+		            		<p style="text-align:left;font-weight:bold;">特权：</p>
+		            		<p style="text-align:left;font-size:12px;">基本扣点率8.8折</p>
+		            		<p style="text-align:left;font-size:12px;">无须上传任何地址证明</p>
+		            		<p style="text-align:left;font-size:12px;">默认确认订单</p>
+		            		<p style="text-align:left;font-size:12px;">商品上架时间无限制</p>
+		            		<p style="text-align:left;font-size:12px;">仓库无限期</p>
+		            	</div>
+		            	<div style="position:absolute;left:450px;top:50px">
+		            		<p style="text-align:left;font-weight:bold;">押金：</p>
+		            		<span>￥1,000.00  </span><button type="button" class="btn btn-primary">立即缴交完成认证</button>
+							<br><br><br>
+							<button type="button" class="btn btn-default">上传仓库门口正面照片</button>
+		            		<input type="file" name="store_url" />
+		            		<input type="text" name="reminder" placeholder="提示我们的配送员如：快乐小区大门进来左转" >
+		            		<input type="hidden" name="params_number" value="11"/>
+		            		<br><br><p style="color:red;font-size:12px;">*申请退回押金将在10个工作日内退还到账</p>
+		            	</div>
+					</div>
+	      		</div>
+	      		</form>
+	      		<br>
+	      		<form id="firm_info" method="post" enctype="multipart/form-data">
+				<div style="width:120px;">
+					<div style="float:left;">
+						<label>
+			      			<input type="radio"  value="radio"  onclick="method02()">营业执照
+			      		</label>
+			      		<br><span style="position:relative;left:20px;top:4px;font-size:12px;">有营业执照的实体店、仓库、办公室、房间等供应商适用</span>
+		      		</div>
+		      		<div id="attestation02">
+			      		<div style="position:relative;left:50px;top:18px;width:800px;height:250px;margin-left:100px;align:left;">
+			      		<ul class="nav nav-tabs">
+			      			<li>
+				      			<h6 style="text-align:left;font-weight:bold;">以营业执照认证仓库</h6>
+			      			</li>
+			      			<li>
+				      			<input type="text" name="firm_name" placeholder="营业执照上的名称" >&nbsp&nbsp<input type="text" name="bl_number" placeholder="营业执照号码" >&nbsp&nbsp<input type="text" name="legal_person" placeholder="法人姓名" >&nbsp&nbsp<input type="text" name="legal_card" placeholder="法人身份证号码" >
+			      			</li>
+			      			<li>
+								<br><span style="font-weight:bold;">仓库到期日：</span>
+								    <select name="year">
+								      <option value="2015">2015</option>
+								      <option value="2016">2016</option>
+								      <option value="2017">2017</option>
+								      <option value="2018">2018</option>
+								    </select>
+			 					    <label>年</label>
+								    <select name="month">
+								      <option value="1">1</option>
+								      <option value="2">2</option>
+								      <option value="3">3</option>
+								      <option value="4">4</option>
+								    </select name="day">
+			 					    <label>月</label>
+								    <select name="day">
+								      <option value="1">1</option>
+								      <option value="2">2</option>
+								      <option value="3">3</option>
+								      <option value="4">4</option>
+								    </select>
+			 					    <label>日</label>
+			 					    <span style="color:red;font-size:12px;">当前营业执照上的到期日。以后更新营业执照可延长期限</span>
+		 					    </li>
+		 					    <li>
+			 					    <p style="color:red;font-size:12px;">上传资料必须跟填写资料匹配方能通过审核</p>
+		 					    </li>
+		 					    <li>
+			 					    <input type="file" name="url">上传法人身份证正面</input>
+			 					    <input type="file" name="url2">上传法人身份证背面</input>
+			 					    <input type="file" name="url3">上传物业房产证</input>
+			 					    <input type="file" name="url4">上传手持身份证照片</input>
+		 					    </li>
+		 					    <li>
+			 					    <p style="color:red;font-size:12px;">为了我们更快速的配送请上传以下位置资料</p>
+		 					    </li>
+							    <li>
+		            				<input type="file" name="store_url" />上传仓库门口正面照片
+								</li>
+		 					    <li>
+		 					    	<input type="text" name="reminder" placeholder="提示我们的配送员如：快乐小区大门进来左转" >
+		 					    </li>
+		 					    <input type="hidden" name="params_number" value="22"/>
+		 					</ul>
+			      		</div>
+		      		</div>
+		      	</div>
+		      	</form>
+	      		<br>
+	      		<form id="hire_info" method="post" enctype="multipart/form-data">
+				<div style="width:120px;">
+					<div style="float:left;">
+						<label>
+			      			<input type="radio"  value="radio"  onclick="method03()">租赁合同
+			      		</label>
+			      		<br><span style="position:relative;left:20px;top:4px;font-size:12px;">微商、淘宝客、等凡是自有现货商品并使用租赁方式经营的供应商适用。任何租用实体店、仓库、办公室、房间的供应商均可</span>
+		      		</div>
+		      		<div id="attestation03">
+			      		<div style="position:relative;left:50px;top:18px;width:800px;height:250px;margin-left:100px;align:left;">
+			      		<ul class="nav nav-tabs">
+			      			<li>
+				      			<h6 style="text-align:left;font-weight:bold;">以租赁合同认证仓库</h6>
+			      			</li>
+			      			<li>
+				      			<input type="text" name="lessee_name" placeholder="承租人姓名" >&nbsp&nbsp<input type="text" name="lessee_card" placeholder="承租人身份证号码" >
+			      			</li>
+			      			<li>
+								<br><span style="font-weight:bold;">仓库到期日：</span>
+								    <select name="year">
+								      <option value="2015">2015</option>
+								      <option value="2016">2016</option>
+								      <option value="2017">2017</option>
+								      <option value="2018">2018</option>
+								    </select>
+			 					    <label>年</label>
+								    <select name="month">
+								      <option value="1">1</option>
+								      <option value="2">2</option>
+								      <option value="3">3</option>
+								      <option value="4">4</option>
+								    </select>
+			 					    <label>月</label>
+								    <select name="day">
+								      <option value="1">1</option>
+								      <option value="2">2</option>
+								      <option value="3">3</option>
+								      <option value="4">4</option>
+								    </select>
+			 					    <label>日</label>
+			 					    <span style="color:red;font-size:12px;">租约到期日。如以后租约更新可随时延长</span>
+		 					    </li>
+		 					    <li>
+			 					    <p style="color:red;font-size:12px;">上传资料必须跟填写资料匹配方能通过审核</p>
+		 					    </li>
+		 					    <li>
+			 					    <input type="file" name="url">上传承租人身份证正面</input>
+			 					    <input type="file" name="url2">上传承租人身份证背面</input>
+			 					    <input type="file" name="url3">上传租赁合同</input>
+			 					    <input type="file" name="url4">上传手持身份证照片</input>
+		 					    </li>
+		 					    <li>
+			 					    <p style="color:red;font-size:12px;">为了我们更快速的配送请上传以下位置资料</p>
+		 					    </li>
+		 					    <li>
+		            				<input type="file" name="store_url" />上传仓库门口正面照片
+								</li>
+		 					    <li>
+		 					    	<input type="text" name="reminder" placeholder="提示我们的配送员如：快乐小区大门进来左转" >
+		 					    </li>
+		 					    <input type="hidden"  name="params_number" value="20"/>
+		 					</ul>
+			      		</div>
+		      		</div>
+		      	</div>
+		      	</form>
+	      		<br>
+	      		<form id="myself_info" method="post" enctype="multipart/form-data">
+				<div style="width:120px;">
+					<div style="float:left;">
+						<label>
+			      			<input type="radio"  value="radio" onclick="method04()">自有物业
+			      		</label>
+			      		<br><span style="position:relative;left:20px;top:4px;font-size:12px;">自有物业非租用的供应商适用。如同时有营业执照则随意选择一项即可。</span>
+		      		</div>
+		      		<div id="attestation04">
+			      		<div style="position:relative;left:50px;top:18px;width:800px;height:250px;margin-left:100px;align:left;">
+			      			<h6 style="text-align:left;font-weight:bold;">以自有物业认证仓库</h6>
+			      			<input type="text" name="p_own_name" placeholder="房产证上的姓名" >&nbsp&nbsp<input type="text" name="p_own_card" placeholder="身份证号码" >&nbsp&nbsp<input type="text" name="p_card" placeholder="房产证号码" >&nbsp&nbsp<input type="text" name="p_number" placeholder="房产证编号" >
+							<p style="font-weight:bold;">仓库到期日：</p>
+							
+							自认证日算起<input type="text" name="month" placeholder="月份" >月
+
+							<span style="color:red;font-size:12px;">最多24个月，到期之后可再次申请延期。</span>
+						    <p style="color:red;font-size:12px;">上传资料必须跟填写资料匹配方能通过审核</p>
+						    <input type="file" name="url" >上传身份证正面</input>
+						    <input type="file" name="url2" >上传身份证背面</input>
+						    <input type="file" name="url3" >上传物业房产证</input>
+						    <input type="file" name="url4" >上传手持身份证照片</input>
+						    <p style="color:red;font-size:12px;">为了我们更快速的配送请上传以下位置资料</p>
+		    				上传仓库门口正面照片<input type="file" name="store_url" />
+						    <input type="text" name="reminder" placeholder="提示我们的配送员如：快乐小区大门进来左转" >
+						    <input type="hidden" name="params_number" value="20"/>
+			      		</div>
+		      		</div>
+		      	</div>
+		      	</form>
+			</div>
+			</div>
+
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+
+	<div align="center";>
+		<button type="button" class="btn btn-primary">返回</button>
+		<button type="button" class="btn btn-primary" id="submit">提交审核</button>
+	</div>

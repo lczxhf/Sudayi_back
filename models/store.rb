@@ -5,18 +5,26 @@ class Store
 
   belongs_to :supplier_account
   belongs_to :state                                                                     #仓库认证状态
-  belongs_to :store_address                                                               #仓库地址
+  belongs_to :store_address,:dependent=>:delete                                                               #仓库地址
   has_many :store_employee
   has_many :products
   has_many :orders
+  has_one :store_info,:dependent=>:delete
+
 
   field :name, :type => String
-  field :open_time_begin_day, :type => String
-  field :open_time_end_day, :type => String
-  field :open_time_in_one_week, :type=> String
-  field :credit_url, :type => String
-  field :manager_id,:type=>String                                                   #仓库管理员
-  field :is_open,:type=>Boolean                                                       #仓库是否开门
-  field :validate_person,:type=>String                                              #认证员
+  field :is_open,:type=>Boolean,:default=>true                                                       #仓库是否开门
 
+  
+  def set_store_info(info,account_id,state_id,url,url2,url3,url4)
+    puts info.to_json
+      info.url=url
+      info.url2=url2
+      info.url3=url3
+      info.url4=url4
+      info.supplier_account_id=account_id
+      info.state_id=state_id
+      info.save
+
+  end
 end

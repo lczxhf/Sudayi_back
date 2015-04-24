@@ -1,5 +1,5 @@
 SudayiBack::App.controllers :common do
-
+ require 'date'
 #返回某个区下的自定义区
 get :get_node do
   nodes=Node.where(area_id:params[:area_id])
@@ -40,7 +40,10 @@ get :code_image do
   image
 end  
 get :test do
-  
+   abc=Time.now+12.month
+   puts abc
+   cba=Time.parse("12:03").strftime("%Y%m%d")
+   puts cba.class
 end
 
 end

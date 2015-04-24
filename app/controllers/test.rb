@@ -43,4 +43,10 @@ get :back_goods do
   @account=SupplierAccount.find(params[:id])
   render :back_goods
 end
+get :add_store do
+  @account=SupplierAccount.find(params[:id])
+  @nodes=Node.all
+  render :add_store
+end
+
 end

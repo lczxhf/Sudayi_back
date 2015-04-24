@@ -2,7 +2,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :supplier_account_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.select( :supplier_account_id,:collection=>SupplierAccount.all,:fields=>[:mobile,:id], :class => 'form-control input-xlarge input-with-feedback', :autofocus => true) %>
+    <%= f.text_field :supplier_account_id, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
     <span class='help-inline'><%= error ? f.error_message_on(:supplier_account_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
@@ -10,7 +10,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :state_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.select( :state_id,:collection=>State.all,:fields=>[:name,:id] :class => 'form-control input-xlarge input-with-feedback' )%>
+    <%= f.text_field :state_id, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:state_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
@@ -30,60 +30,12 @@
     <span class='help-inline'><%= error ? f.error_message_on(:name) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @store.errors.include?(:open_time_begin_day) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :open_time_begin_day, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :open_time_begin_day, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:open_time_begin_day) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-<% error = @store.errors.include?(:open_time_end_day) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :open_time_end_day, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :open_time_end_day, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:open_time_end_day) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-<% error = @store.errors.include?(:open_time_in_one_week) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :open_time_in_one_week, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :open_time_in_one_week, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:open_time_in_one_week) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-<% error = @store.errors.include?(:credit_url) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :credit_url, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :credit_url, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:credit_url) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-<% error = @store.errors.include?(:manager_id) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :manager_id, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :manager_id, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:manager_id) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
 <% error = @store.errors.include?(:is_open) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :is_open, :class => 'control-label' %>
   <div class='controls'>
     <%= f.check_box :is_open, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:is_open) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-<% error = @store.errors.include?(:validate_person) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :validate_person, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :validate_person, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:validate_person) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 

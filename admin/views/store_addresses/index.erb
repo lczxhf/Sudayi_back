@@ -60,8 +60,8 @@
           <td class=list-column> <%= store_address.province_id %> </td>
           <td class=list-column> <%= store_address.city_id %> </td>
           <td class=list-column> <%= store_address.area_id %> </td>
-          <td class=list-column> <%= store_address.detail_id %> </td>
-          <td class=list-column> <%= store_address.node_id %> </td>
+          <td class=list-column> <%= store_address.detail.name %> </td>
+          <td class=list-column> <%= store_address.node.name %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:store_addresses, :edit, :id => store_address.id), :rel => :tooltip, :title => "#{pat(:edit)} store_address", :class => 'list-row-action-wrapper-link' %>

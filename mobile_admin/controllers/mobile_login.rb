@@ -125,7 +125,7 @@ end
 post :update_firm_info,:csrf_protection=>false do
   if params[:name] && params[:user_id] && params[:legal_person] && params[:number] && params[:code] && params[:url1] && params[:url2] && params[:url3] && params[:address]
         #判断公司命、营业执照、机构代码是否已被认证过
-         if FirmInfo.where(firm_name:params[:name]).first || FirmInfo.where(business_license_number:params[:number]).first || FirmInfo.where(org_code:params[:code]).first 
+         if FirmInfo.where(firm_name:params[:name]).first || FirmInfo.where(business_license_number:params[:number]).first || FirmInfo.where(legal_person_card:params[:code]).first 
             "该公司信息已被注册".to_json
          else
             @state = State.where(:code => '01').first
@@ -133,7 +133,7 @@ post :update_firm_info,:csrf_protection=>false do
             url1 = params[:url1]
             url2 = params[:url2]
             url3=params[:url3]
-            @firm_info = FirmInfo.new(firm_name:params[:name],legal_person:params[:legal_person],business_license_number:params[:number],org_code:params[:code],url:url1,url2:url2,url3:url3) 
+            @firm_info = FirmInfo.new(firm_name:params[:name],legal_person:params[:legal_person],business_license_number:params[:number],legal_person_card:params[:code],url:url1,url2:url2,url3:url3) 
             @firm_info.state = @state
            
             if params[:account_type] == 'supplier'
