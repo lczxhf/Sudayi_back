@@ -9,6 +9,7 @@ class Product
   belongs_to :category                                            #商品分类
   has_many :image_items
   has_many :product_details
+  belongs_to :bill                                                #票据
 
   field :number,:type=>String
   field :name, :type => String

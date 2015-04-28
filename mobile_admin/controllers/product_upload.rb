@@ -10,15 +10,26 @@ end
   
 #供应商上传商品
 post :create_product, :csrf_protection=>false do
-   if params[:ck_name] && params[:ck_des] && params[:cd_price] && params[:spec] && params[:cd_storage] && params[:ck_uploadkey1]
+  logger.info params
+   if params[:ck_name] && params[:ck_des] && params[:ck_price] && params[:ck_spec] && params[:ck_storage] && params[:url1]
     if !Product.where(supplier_account_id:params[:user_id],name:params[:ck_name]).first    #判断商品名是否存在
-     if !params[:ck_price].to_f<=0.0 && !params[:ck_storage].to_i<=0                                            #判断输入的价格和价钱是否小于0
+
+     if !(params[:ck_price].to_f<0.0) && !(params[:ck_storage].to_i<0)                                            #判断输入的价格和价钱是否小于0
       @product = Product.new()
       @product.name = params[:ck_name]
-      @product.account_id = params[:user_id]
+      @product.supplier_account_id = params[:user_id]
       @product.description = params[:ck_des]
       state = State.where(code:'01').first
       @product.state = state
+      @product.number=params[:number]
+      if params[:is_bring_three]=="true"
+        @product.is_bring_three=true
+      else
+        @product.is_bring_three=false
+      end
+      bill=Bill.where(name:params[:bill]).first
+      @product.bill=bill
+      
       product_detail = ProductDetail.new
       product_detail.price = params[:ck_price].to_f
       product_detail.product = @product
@@ -26,39 +37,23 @@ post :create_product, :csrf_protection=>false do
       product_detail.storage = params[:ck_storage].to_i
       product_detail.no_store = params[:ck_storage].to_i
       product_detail.save
-  #   @product.store=Store.create()
-        if params[:uploadkey1]
+      case params[:url_sum]
+      when "3"
+        @product.level=1
+      when "2"
+        @product.level=2
+      when "1"
+        @product.level=3
+      end
+      params[:url_sum].to_i.times do |index|
           image_item = ImageItem.new
-          image_item.url = params[:uploadkey1]
+          image_item.url = params["url"+(index+1).to_s]
           @product.image_items<<image_item
-          image_item.save!
-        end
-        if params[:uploadkey2]
-          image_item = ImageItem.new
-          image_item.url = params[:uploadkey2]
-          @product.image_items<<image_item
-          image_item.save!
-        end
-        if params[:uploadkey3]
-          image_item = ImageItem.new
-          image_item = ImageItem.new
-          image_item.url = params[:uploadkey3]
-          @product.image_items<<image_item
-          image_item.save!
-        end
-        if params[:uploadkey4]
-          image_item = ImageItem.new
-          image_item.url = params[:uploadkey4]
-          @product.image_items<<image_item
-          image_item.save!
-        end
-        if params[:uploadkey5]
-          image_item = ImageItem.new
-          image_item.url = params[:uploadkey5]
-          @product.image_items<<image_item
-          image_item.save!
-        end
-    @product.save!
+         image_item.save!
+      end
+       
+    @product.save
+    "ok".to_json
      else
   "请正确填写价格和库存".to_json
      end
@@ -71,6 +66,9 @@ post :create_product, :csrf_protection=>false do
  end
 
  #获取某一个供应商里所有没加入仓库的商品
+
+
+
 get :warehouse_all_product do
   if params[:user_id]
      product_details = ProductDetail.where(:no_store.gt=>0)

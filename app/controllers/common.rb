@@ -40,10 +40,9 @@ get :code_image do
   image
 end  
 get :test do
-   abc=Time.now+12.month
-   puts abc
-   cba=Time.parse("12:03").strftime("%Y%m%d")
-   puts cba.class
+ bills=Bill.all
+
+ bills.to_json
 end
 
 end

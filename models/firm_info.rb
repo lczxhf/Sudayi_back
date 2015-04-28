@@ -23,5 +23,9 @@ class FirmInfo
    mount_uploader :url4, ImageItemUpload
    field :validate_person,:type=>String,:default=>'wu'                #认证员
   
-
+  after_destroy do |abc|
+      path=File.dirname(__FILE__)
+      path=path[0..path.rindex('/')]+"public"
+      Dir::delete(path+'/uploads/firm_info/'+abc._id)
+  end
 end

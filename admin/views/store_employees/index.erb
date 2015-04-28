@@ -39,7 +39,9 @@
                 <th class=header> <%= mat(:store_employee, :created_at) %></th>
                 <th class=header> <%= mat(:store_employee, :updated_at) %></th>
                 <th class=header> <%= mat(:store_employee, :supplier_account_id) %></th>
+                <th class=header> <%= mat(:store_employee, :store_id) %></th>
                 <th class=header> <%= mat(:store_employee, :is_work) %></th>
+                <th class=header> <%= mat(:store_employee, :my_account) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -53,7 +55,9 @@
           <td class=list-column> <%= time_ago_in_words store_employee.created_at %></td>
           <td class=list-column> <%= time_ago_in_words store_employee.updated_at %></td>
           <td class=list-column> <%= store_employee.supplier_account_id %> </td>
+          <td class=list-column> <%= store_employee.store_id %> </td>
           <td class=list-column> <%= store_employee.is_work %> </td>
+          <td class=list-column> <%= store_employee.my_account %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:store_employees, :edit, :id => store_employee.id), :rel => :tooltip, :title => "#{pat(:edit)} store_employee", :class => 'list-row-action-wrapper-link' %>

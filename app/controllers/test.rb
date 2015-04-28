@@ -9,14 +9,20 @@ get :home do
 end
 get :store do
   @account=SupplierAccount.find(params[:id])
+  @stores=@account.stores
+  logger.info @account.stores
   render :store
 end
 get :product do
   @account=SupplierAccount.find(params[:id])
+  @products=@account.products
+  
   render :product
 end
 get :employee do
   @account=SupplierAccount.find(params[:id])
+  @employee_accounts=SupplierAccount.where(supplier_account_id:@account._id)
+  logger.info @employee_accounts.to_json
   render :employee
 end
 get :product_upload do

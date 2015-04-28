@@ -2,8 +2,16 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :supplier_account_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :supplier_account_id, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <%= f.select(:supplier_account_id, :collection=>SupplierAccount.where(level:1),:fields=>[:mobile,:id],:class => 'form-control input-xlarge input-with-feedback', :autofocus => true) %>
     <span class='help-inline'><%= error ? f.error_message_on(:supplier_account_id) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @store_employee.errors.include?(:store_id) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :store_id, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.select(:store_id, :collection=>Store.all,:fields=>[:name,:id],:class => 'form-control input-xlarge input-with-feedback' )%>
+    <span class='help-inline'><%= error ? f.error_message_on(:store_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 <% error = @store_employee.errors.include?(:is_work) %>
@@ -12,6 +20,14 @@
   <div class='controls'>
     <%= f.check_box :is_work, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:is_work) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @store_employee.errors.include?(:my_account) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :my_account, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.select(:my_account,:collection=>SupplierAccount.where(:level.gt=>1),:fields=>[:mobile,:id] ,:class => 'form-control input-xlarge input-with-feedback') %>
+    <span class='help-inline'><%= error ? f.error_message_on(:my_account) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 

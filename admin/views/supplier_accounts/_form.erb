@@ -70,11 +70,11 @@
     <span class='help-inline'><%= error ? f.error_message_on(:method_cooperation) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @supplier_account.errors.include?(:account_id) %>
+<% error = @supplier_account.errors.include?(:supplier_account_id) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :account_id, :class => 'control-label' %>
+  <%= f.label :supplier_account_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :account_id, :class => 'form-control input-xlarge input-with-feedback' %>
+    <%= f.select(:supplier_account_id,:collection=>SupplierAccount.all,:fields=>[:mobile,:id], :class => 'form-control input-xlarge input-with-feedback') %>
     <span class='help-inline'><%= error ? f.error_message_on(:account_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>

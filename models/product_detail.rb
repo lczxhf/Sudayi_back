@@ -6,7 +6,7 @@ class ProductDetail
    belongs_to :product                                                #商品id
    has_many :product_stores                                      
    has_many :comments
-   has_many :coustomer_services                            #客服
+   has_many :customer_services                                      #客服
 
    field :specification,:type=>String                           #规格
    field :price, :type => Float

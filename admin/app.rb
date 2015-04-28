@@ -32,6 +32,8 @@ module SudayiBack
     end
 
     access_control.roles_for :admin do |role|
+      role.project_module :myself_infos, '/myself_infos'
+      role.project_module :hire_infos, '/hire_infos'
       role.project_module :store_types, '/store_types'
       role.project_module :store_infos, '/store_infos'
       role.project_module :tags, '/tags'

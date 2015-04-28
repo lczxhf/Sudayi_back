@@ -4,6 +4,7 @@ class StoreEmployee
   #供应商员工表
 
   belongs_to :supplier_account
+  belongs_to :store
   
 
   field :is_work,:type=>Boolean

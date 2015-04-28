@@ -16,4 +16,48 @@
 	</div>
 	<br>
 	<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+	  	<table class="table">
+	     <thead>
+	       <tr>
+	         <th>姓名</th>
+	         <th>手机</th>
+	         <th>仓库</th>
+	         <th>当前状况</th>
+	         <th>操作</th>
+	      </tr>
+	     </thead>
+	     <tbody>
+	     <% @employee_accounts.each_with_index do |employee_account,index|%>
+	       <tr>
+	         <td><%=employee_account.user_name%></td>
+	         <td><%=employee_account.mobile%></td>
+	         <td><%=StoreEmployee.where(my_account:employee_account._id).first.store.name%></td>
+	         
+	         <td>
+
+	            <label></label>
+	            <select id="is_open">
+	           
+	              <option value="上班">上班</option>
+	              <%if !StoreEmployee.where(my_account:employee_account._id).first.is_work%>
+	              <option value="下班" selected="selected">下班</option>
+	              <%else%>
+	              <option value="下班" >下班</option>
+	              <%end%>
+	            </select>
+				<input type="hidden" value="<%=employee_account._id%>" />
+	         </td>
+	         <td>
+	         	<ul class="list-inline">
+					<li><a href="">申请延期</a></li>
+					<li><a href="">管理商品</a></li>
+					<li><a href="">删除仓库</a></li>
+					<li><a href="">上传商品</a></li>
+				</ul>
+	         </td>
+	       </tr>
+	       <%end%>
+	      
+	     </tbody>
+	    </table>
 	</div>

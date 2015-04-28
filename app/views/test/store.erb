@@ -5,6 +5,12 @@
     
     $(".nav-tabs li").removeClass("active");
     $(".nav-tabs li :eq(2)").attr("class","active");
+    $("#is_open").change(function(){
+    	
+    	$.get("/mobile_admin/store_manager/set_store_status",{store_id:$(this).next().val()},function(obj){
+    		
+    	},"json")
+    })
   })
 </script>
 <% end %>
@@ -31,22 +37,28 @@
 	      </tr>
 	     </thead>
 	     <tbody>
+	     <% @stores.each_with_index do |store,index|%>
 	       <tr>
-	         <td>01</td>
-	         <td>超级小店</td>
-	         <td><p style="font-weight:bold;">深圳罗湖</p>上步路2888号美丽小区9栋812</td>
-	         <td>20150402</td>
+	         <td><%=index+1%></td>
+	         <td><%=store.name%></td>
+	         <td><p style="font-weight:bold;"><%=store.store_address.node.name%></p><%=store.store_address.detail.name%></td>
+	         <td><%=store.store_info.end_date.strftime("%Y%m%d")%></td>
 	         <td>300</td>
 	         <td>800</td>
-	         <td>0830-2200</td>
+	         <td><%=store.store_info.open_time_begin_day%>-<%=store.store_info.open_time_end_day%></td>
 	         <td>
-	          <form action="save.php" method="post" >
+
 	            <label></label>
-	            <select>
+	            <select id="is_open">
+	            <!--   <input type="hidden" value="<%=store._id%>"/> -->
 	              <option value="上架中">上架中</option>
-	              <option value="已下架">已下架</option>
+	              <%if !store.is_open%>
+	              <option value="已下架" selected="selected">已下架</option>
+	              <%else%>
+	              <option value="已下架" >已下架</option>
+	              <%end%>
 	            </select>
-	          </form>
+				<input type="hidden" value="<%=store._id%>" />
 	         </td>
 	         <td>
 	         	<ul class="list-inline">
@@ -57,33 +69,8 @@
 				</ul>
 	         </td>
 	       </tr>
-	       <tr>
-	         <td>02</td>
-	         <td>美丽佳人</td>
-	         <td><p style="font-weight:bold;">深圳福田</p>皇岗中心路999号世纪中心地下
-202铺</td>
-	         <td>20150402</td>
-	         <td>300</td>
-	         <td>1200</td>
-	         <td>0830-2200</td>
-	         <td>
-	          <form action="save.php" method="post" >
-	            <label></label>
-	            <select>
-	              <option value="上架中">上架中</option>
-	              <option value="已下架">已下架</option>
-	            </select>
-	          </form>
-	         </td>
-	         <td>
-	         	<ul class="list-inline">
-					<li><a href="">申请延期</a></li>
-					<li><a href="">管理商品</a></li>
-					<li><a href="">删除仓库</a></li>
-					<li><a href="">上传商品</a></li>
-				</ul>
-	         </td>
-	       </tr>
+	       <%end%>
+	      
 	     </tbody>
 	    </table>
 	</div>

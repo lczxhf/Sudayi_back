@@ -42,12 +42,19 @@
                 <th class=header> <%= mat(:product, :supplier_account_id) %></th>
                 <th class=header> <%= mat(:product, :state_id) %></th>
                 <th class=header> <%= mat(:product, :category_id) %></th>
+                <th class=header> <%= mat(:product, :bill_id) %></th>
+                <th class=header> <%= mat(:product, :number) %></th>
                 <th class=header> <%= mat(:product, :name) %></th>
                 <th class=header> <%= mat(:product, :description) %></th>
                 <th class=header> <%= mat(:product, :level) %></th>
                 <th class=header> <%= mat(:product, :is_bring_three) %></th>
                 <th class=header> <%= mat(:product, :validate_person) %></th>
                 <th class=header> <%= mat(:product, :pay_types) %></th>
+                <th class=header> <%= mat(:product, :tag) %></th>
+                <th class=header> <%= mat(:product, :is_up_shelve) %></th>
+                <th class=header> <%= mat(:product, :down_shelve_time) %></th>
+                <th class=header> <%= mat(:product, :weight) %></th>
+                <th class=header> <%= mat(:product, :volume) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -64,12 +71,19 @@
           <td class=list-column> <%= product.supplier_account_id %> </td>
           <td class=list-column> <%= product.state_id %> </td>
           <td class=list-column> <%= product.category_id %> </td>
+          <td class=list-column> <%= product.bill_id %> </td>
+          <td class=list-column> <%= product.number %> </td>
           <td class=list-column> <%= product.name %> </td>
           <td class=list-column> <%= product.description %> </td>
           <td class=list-column> <%= product.level %> </td>
           <td class=list-column> <%= product.is_bring_three %> </td>
           <td class=list-column> <%= product.validate_person %> </td>
           <td class=list-column> <%= product.pay_types %> </td>
+          <td class=list-column> <%= product.tag %> </td>
+          <td class=list-column> <%= product.is_up_shelve %> </td>
+          <td class=list-column> <%= product.down_shelve_time %> </td>
+          <td class=list-column> <%= product.weight %> </td>
+          <td class=list-column> <%= product.volume %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:products, :edit, :id => product.id), :rel => :tooltip, :title => "#{pat(:edit)} product", :class => 'list-row-action-wrapper-link' %>

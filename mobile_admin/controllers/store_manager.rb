@@ -1,6 +1,7 @@
 SudayiBack::MobileAdmin.controllers :store_manager do
  require 'date'
  require 'json'
+ 
 use Rack::Cors do
   allow do
     # put real origins here
@@ -12,6 +13,7 @@ use Rack::Cors do
 
 
 post :new_store,:csrf_protection => false do
+  logger.info params
    if params[:params_number].to_i==params.size-1
     if !Store.where(name:params[:warehouse_name]).first        #判断仓库名是否已经存在
      account=SupplierAccount.find(params[:user_id])
@@ -21,7 +23,8 @@ post :new_store,:csrf_protection => false do
      @store.name = params[:warehouse_name]
      @store.supplier_account = account
      store_info.store=@store
-     store_info.store_url = params[:store_url] 
+     store_info.store_url = params[:store_url]
+     logger.info params[:store_url].class
      store_info.open_time_begin_day = params[:first_time]
      store_info.open_time_end_day = params[:last_time]     
      store_info.address_reminder=params[:reminder]
@@ -34,7 +37,7 @@ post :new_store,:csrf_protection => false do
      @store.store_address = store_address
      state = State.where(code:'01').first
      @store.state = state
-     logger.info params
+     
      case params[:type]
      when "deposit"
       store_info.end_date=Date.parse("2100-1-1")
@@ -60,7 +63,7 @@ post :new_store,:csrf_protection => false do
       myself_info.porperty_own_name=params[:p_own_name]
       myself_info.porperty_own_card=params[:p_own_card]
       myself_info.porperty_card=params[:p_card]
-      myself_info.porperty_own_number=params[:p_number]
+      myself_info.porperty_number=params[:p_number]
       @store.set_store_info(myself_info,account._id,state._id,params[:url],params[:url2],params[:url3],params[:url4])
      end
      if @store.save
@@ -87,6 +90,16 @@ get :get_all_store do
   "此账号不存在仓库".to_json
   end
 end 
+
+get :set_store_status do
+  store=Store.find(params[:store_id])
+  if store
+    store.is_open=!store.is_open
+    store.save
+  else
+    "仓库不存在".to_json
+  end
+end
 
 post :insert_product_to_store,:csrf_protection => false do
   store = Store.find(params[:store_id])

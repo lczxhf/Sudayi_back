@@ -9,6 +9,8 @@ class SupplierAccount
   has_many :stores
   has_one :credit_info
   has_one :firm_info
+  has_many :products
+  has_many :store_employees
   
   field :user_name,:type=>String
   field :crypted_password,:type=>String
@@ -17,7 +19,7 @@ class SupplierAccount
   field :mobile,:type=>String
   field :level,:type=>Integer                                                 #账号的等级
   field :method_cooperation,:type=>String                        #合作方式 例如是自己签的 还是后期根据别的引入的
-  field :account_id,:type=>String                                          #员工的最高级用户的id 例如员工、管理员的最高级用户id都是老板的id
+  field :supplier_account_id,:type=>String                                          #员工的最高级用户的id 例如员工、管理员的最高级用户id都是老板的id
 
 #验证
   validates_presence_of     :mobile, :level,:real_name

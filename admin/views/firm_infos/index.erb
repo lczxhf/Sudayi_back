@@ -71,10 +71,10 @@
           <td class=list-column> <%= firm_info.legal_person %> </td>
           <td class=list-column> <%= firm_info.business_license_number %> </td>
           <td class=list-column> <%= firm_info.legal_person_card %> </td>
-          <td class=list-column> <%= firm_info.url %> </td>
-          <td class=list-column> <%= firm_info.url2 %> </td>
-          <td class=list-column> <%= firm_info.url3 %> </td>
-          <td class=list-column> <%= firm_info.url4 %> </td>
+          <td class=list-column> <%=image_tag firm_info.url.thumb if firm_info.url? %> </td>
+          <td class=list-column> <%=image_tag firm_info.url2.thumb if firm_info.url2? %> </td>
+          <td class=list-column> <%=image_tag firm_info.url3.thumb if firm_info.url3? %> </td>
+          <td class=list-column> <%=image_tag firm_info.url4.thumb if firm_info.url4? %> </td>
           <td class=list-column> <%= firm_info.validate_person %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>

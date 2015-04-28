@@ -27,6 +27,7 @@
          <th>货号</th>
          <th>等级</th>
          <th>商品</th>
+         <th>规格</th>
          <th>零售价</th>
          <th>评价</th>
          <th>当前状态</th>
@@ -34,44 +35,38 @@
       </tr>
      </thead>
      <tbody>
+     <%@products.each do |product|%>
        <tr>
          <td><form action="save.rb" method="post" ><input type="checkbox" value="2"  name="" /></form></td>
-         <td>201503071233</td>
-         <td>0101018888</td>
-         <td>A级</td>
-         <td>美丽裙子</td>
-         <td>￥380</td>
+         <td><%=product.created_at.strftime("%Y%m%d%H%M")%></td>
+         <td><%=product.number%></td>
+         <td><%=product.level%>级</td>
+         <td><%=product.name%></td>
+         <td>
+         <%product.product_details.each do |product_detail|%>
+            <%=product_detail.specification%>,
+          <%end%>
+         </td>
+         <td><%product.product_details.each do |product_detail|%>
+            ￥<%=product_detail.price%>
+          <%end%></td>
          <td>97%好评</td>
          <td>
           <form action="save.php" method="post" >
             <label></label>
             <select>
               <option value="上架中">上架中</option>
-              <option value="已下架">已下架</option>
+              <%if !product.is_up_shelve%>
+              <option value="已下架" selected="selected">已下架</option>
+              <%else%>
+                  <option value="已下架" >已下架</option>
+              <%end%>
             </select>
           </form>
          </td>
-         <td>201503071233</td>
+         <td><%=product.down_shelve_time.strftime("%Y%m%d%H%M")%></td>
        </tr>
-       <tr>
-         <td><form action="save.rb" method="post" ><input type="checkbox" value="2"  name="" /></form></td>
-         <td>201503071233</td>
-         <td>0101018888</td>
-         <td>A级</td>
-         <td>美丽裙子</td>
-         <td>￥380</td>
-         <td>97%好评</td>
-         <td>
-          <form action="save.php" method="post" >
-            <label></label>
-            <select>
-              <option value="上架中">上架中</option>
-              <option value="已下架">已下架</option>
-            </select>
-          </form>
-         </td>
-         <td>201503071233</td>
-       </tr>
+     <%end%>
      </tbody>
     </table>
 	</div>
