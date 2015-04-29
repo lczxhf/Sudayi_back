@@ -53,8 +53,8 @@
            </td>
           <td class=list-column> <%= time_ago_in_words product_store.created_at %></td>
           <td class=list-column> <%= time_ago_in_words product_store.updated_at %></td>
-          <td class=list-column> <%= product_store.product_detail_id %> </td>
-          <td class=list-column> <%= product_store.store_id %> </td>
+          <td class=list-column> <%= product_store.product_detail.specification %> </td>
+          <td class=list-column> <%= product_store.store.name %> </td>
           <td class=list-column> <%= product_store.amount %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>

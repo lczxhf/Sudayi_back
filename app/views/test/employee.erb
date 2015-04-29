@@ -37,7 +37,7 @@
 
 	            <label></label>
 	            <select id="is_open">
-	           
+	           	
 	              <option value="上班">上班</option>
 	              <%if !StoreEmployee.where(my_account:employee_account._id).first.is_work%>
 	              <option value="下班" selected="selected">下班</option>

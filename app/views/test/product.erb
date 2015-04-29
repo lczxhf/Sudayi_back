@@ -1,12 +1,69 @@
 <% content_for :head do %>
 <%= javascript_include_tag "jquery-1.8.2.min" %>
-<script type="text/javascript">
+   <script type="text/javascript">
+
   $(function(){
     
     $(".nav-tabs li").removeClass("active");
     $(".nav-tabs li :eq(1)").attr("class","active");
+    $("details").change(function(){
+      
+    $("#no_store").children().eq($(this).children(":selected").index()).attr("selected","selected");
+    })
+     $("#no_store").change(function(){
+      
+    $("#details").children().eq($(this).children(":selected").index()).attr("selected","selected");
+    })
+
+$('.m_price').each(function(){
+ alert($(this).index());
+})
+      $(".m_price").change(function(e){
+        console.log(e);
+       $(".m_details").eq($(this).index()).children().eq($(this).children(":selected").index()).attr("selected","selected");
+      $(".m_no_store").eq($(this).index()).children().eq($(this).children(":selected").index()).attr("selected","selected");
+    })
+       $(".m_details").change(function(){
+       $(".m_price").children().eq($(this).children(":selected").index()).attr("selected","selected");
+      $(".m_no_store").children().eq($(this).children(":selected").index()).attr("selected","selected");
+    })
+        $(".m_no_store").change(function(){
+       $(".m_price").children().eq($(this).children(":selected").index()).attr("selected","selected");
+      $(".m_details").children().eq($(this).children(":selected").index()).attr("selected","selected");
+    })
+
   })
-</script>
+
+  function show_window(product_id,index){
+    $(".window").eq(0).css("display","block");
+    // $.get("product_detail",{id:product_id},function(obj){
+
+        // $.each(obj,function(a,b){
+          
+          $("#no_store").append($(".m_no_store").eq(index).html());
+           $("#details").append($(".m_details").eq(index).html());
+
+    //     })
+       
+    // },"json");
+    $.get("stores",{id:"<%=@account._id%>"},function(obj1){
+
+      $.each(obj1,function(c,d){
+        $("#stores").append("<option value='"+d._id+"'>"+d.name+"</option>");
+      })
+    },"json");
+  }
+  function show_window_2(product_id){
+     $(".window").eq(1).css("display","block");
+     $("#my_form").append("<input type='hidden' value='"+product_id+"' name='product_id'/>");
+
+  }
+  function cancel_window(){
+
+    $(".window").css("display","none");
+  }
+ </script>
+
 <% end %>
 
     
@@ -29,30 +86,44 @@
          <th>商品</th>
          <th>规格</th>
          <th>零售价</th>
+         <th>未上架</th>
          <th>评价</th>
          <th>当前状态</th>
          <th>自动下架时间</th>
+         <th>操作</th>
       </tr>
      </thead>
      <tbody>
-     <%@products.each do |product|%>
+     <%@products.each_with_index do |product,index|%>
        <tr>
-         <td><form action="save.rb" method="post" ><input type="checkbox" value="2"  name="" /></form></td>
+         <td><input type="checkbox" value="2"  name="" /></td>
          <td><%=product.created_at.strftime("%Y%m%d%H%M")%></td>
          <td><%=product.number%></td>
          <td><%=product.level%>级</td>
          <td><%=product.name%></td>
          <td>
+         <select class="m_details">
          <%product.product_details.each do |product_detail|%>
-            <%=product_detail.specification%>,
+            <option value="<%=product_detail._id%>"><%=product_detail.specification%></option>
           <%end%>
+          </select>
          </td>
-         <td><%product.product_details.each do |product_detail|%>
-            ￥<%=product_detail.price%>
-          <%end%></td>
+         <td>
+         <select class="m_price">
+         <%product.product_details.each do |product_detail|%>
+            <option value="<%=product_detail._id%>"><%=product_detail.price%></option>
+          <%end%>
+          </select>
+         </td>
+          <td><select class="m_no_store">
+         <%product.product_details.each do |product_detail|%>
+            <option value="<%=product_detail._id%>"><%=product_detail.no_store%></option>
+          <%end%>
+          </select>
+          </td>
          <td>97%好评</td>
          <td>
-          <form action="save.php" method="post" >
+       
             <label></label>
             <select>
               <option value="上架中">上架中</option>
@@ -62,11 +133,42 @@
                   <option value="已下架" >已下架</option>
               <%end%>
             </select>
-          </form>
+          
          </td>
          <td><%=product.down_shelve_time.strftime("%Y%m%d%H%M")%></td>
+          <td>
+           <ul class="list-inline">
+             <li><a href="javascript:void(0)" onclick="show_window('<%=product._id%>,<%=index%>')">加入仓库</a></li>  
+             <li><a href="javascript:void(0)" onclick="show_window_2('<%=product._id%>')">add type</a></li>
+          </ul>
+           </td>
        </tr>
+
      <%end%>
+     <div class="window" style="background:lightblue;position:absolute;top:30%;left:10%;  height:200px;width:80%;margin:0 auto;opacity:0.8;display:none;">
+       <center>选择商品要添加到仓库: <br />
+       <form action="/mobile_admin/store_manager/insert_product_to_store" method="post" >
+       规格：<select id="details" name="c_id0"></select><br />
+       仓库：<select id="stores" name="store_id"></select><br />
+       未加入仓库数量：<select id="no_store"></select><br />
+       数量:<input type="text" name="amount0"/><br />
+       <input type="button" value="取消" onclick="cancel_window()" />
+       <input type="submit" value="确定"/>
+       </form>
+        </center>
+     </div>
+     <div class="window" style="background:lightblue;position:absolute;top:30%;left:10%;  height:200px;width:80%;margin:0 auto;opacity:0.8;display:none;">
+       <center>add details for product: <br />
+       <form action="/mobile_admin/product_upload/add_product_detail" method="post" id="my_form" >
+
+       规格：<input type="text" name="specification"/><br />
+       price:<input type="text" name="price"/><br />
+       数量:<input type="text" name="storage"/><br />
+       <input type="button" value="取消" onclick="cancel_window()" />
+       <input type="submit" value="确定" />
+       </form>
+        </center>
+     </div>
      </tbody>
     </table>
 	</div>

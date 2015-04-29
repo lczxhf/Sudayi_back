@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<%= javascript_include_tag "jquery-1.8.2.min" %>
+		<script type="text/javascript">
+			$.get("/mobile/welcome/home_pic",{node_id:"55027d464c31dc61c600003f"},function(obj){
+				$.each(obj,function(a,b){
+				
+					$("#my_div").append("<div>"+b.name+"<br /><image src='"+b.image_items[0].url.thumb.url+"' /></div>");
+				})
+			},"json")
+		</script>
+	</head>
+	<body>
+		<div id="my_div">
+			
+		</div>
+	</body>
+</html>

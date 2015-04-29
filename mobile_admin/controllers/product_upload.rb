@@ -84,6 +84,16 @@ get :warehouse_all_product do
   end
 end
 
+post :add_product_detail, :csrf_protection=>false do
+    product=Product.find(params[:product_id])
+    product_detail=ProductDetail.new
+    product_detail.specification=params[:specification]
+    product_detail.price=params[:price].to_f
+    product_detail.storage=params[:storage].to_i
+    product_detail.no_store=params[:storage].to_i
+    product_detail.product=product
+    product_detail.save
+end
 end
 
 

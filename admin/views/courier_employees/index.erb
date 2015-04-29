@@ -46,7 +46,10 @@
                 <th class=header> <%= mat(:courier_employee, :number) %></th>
                 <th class=header> <%= mat(:courier_employee, :money) %></th>
                 <th class=header> <%= mat(:courier_employee, :product_details) %></th>
+                <th class=header> <%= mat(:courier_employee, :sum) %></th>
                 <th class=header> <%= mat(:courier_employee, :is_work) %></th>
+                <th class=header> <%= mat(:courier_employee, :end_node) %></th>
+                <th class=header> <%= mat(:courier_employee, :my_account) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -67,7 +70,10 @@
           <td class=list-column> <%= courier_employee.number %> </td>
           <td class=list-column> <%= courier_employee.money %> </td>
           <td class=list-column> <%= courier_employee.product_details %> </td>
+          <td class=list-column> <%= courier_employee.sum %> </td>
           <td class=list-column> <%= courier_employee.is_work %> </td>
+          <td class=list-column> <%= courier_employee.end_node %> </td>
+          <td class=list-column> <%= courier_employee.my_account %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:courier_employees, :edit, :id => courier_employee.id), :rel => :tooltip, :title => "#{pat(:edit)} courier_employee", :class => 'list-row-action-wrapper-link' %>

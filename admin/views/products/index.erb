@@ -68,10 +68,10 @@
           <td class=list-column> <%= time_ago_in_words product.created_at %></td>
           <td class=list-column> <%= time_ago_in_words product.updated_at %></td>
           <td class=list-column> <%= product.store_id %> </td>
-          <td class=list-column> <%= product.supplier_account_id %> </td>
-          <td class=list-column> <%= product.state_id %> </td>
+          <td class=list-column> <%= product.supplier_account.mobile %> </td>
+          <td class=list-column> <%= product.state.name %> </td>
           <td class=list-column> <%= product.category_id %> </td>
-          <td class=list-column> <%= product.bill_id %> </td>
+          <td class=list-column> <%= product.bill.name %> </td>
           <td class=list-column> <%= product.number %> </td>
           <td class=list-column> <%= product.name %> </td>
           <td class=list-column> <%= product.description %> </td>

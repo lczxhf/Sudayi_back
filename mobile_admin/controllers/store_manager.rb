@@ -102,13 +102,17 @@ get :set_store_status do
 end
 
 post :insert_product_to_store,:csrf_protection => false do
+
   store = Store.find(params[:store_id])
   if store
     (params.size-1)/2.times do |index|
       if params['amount'+index.to_s]
         product_detail = ProductDetail.find(params['c_id'+index.to_s])
         amount = params['amount'+index.to_s].to_i
-           if product_detail.no_store<=amount
+        logger.info product_detail.no_store
+        logger.info amount
+           if product_detail.no_store>=amount
+
                product_store = ProductStore.where(product_detail_id:params['c_id'+index.to_s],store_id:params[:store_id]).first
                if !product_store
                    product_store = ProductStore.new

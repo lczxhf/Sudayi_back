@@ -2,7 +2,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :courier_account_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.select( :courier_account_id,:collection=>CourierAccount.all,:fields=>[:mobile,:id],:class => 'form-control input-xlarge input-with-feedback', :autofocus => true) %>
+    <%= f.text_field :courier_account_id, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
     <span class='help-inline'><%= error ? f.error_message_on(:courier_account_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
@@ -62,12 +62,36 @@
     <span class='help-inline'><%= error ? f.error_message_on(:product_details) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
+<% error = @courier_employee.errors.include?(:sum) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :sum, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :sum, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:sum) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
 <% error = @courier_employee.errors.include?(:is_work) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :is_work, :class => 'control-label' %>
   <div class='controls'>
     <%= f.check_box :is_work, :class => 'form-control input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:is_work) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_employee.errors.include?(:end_node) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :end_node, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :end_node, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:end_node) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @courier_employee.errors.include?(:my_account) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :my_account, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :my_account, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:my_account) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
 

@@ -54,5 +54,17 @@ get :add_store do
   @nodes=Node.all
   render :add_store
 end
+get :customer do
+  render :customer,:layout=>false
+end
 
+
+get :product_detail do
+  product_details=Product.find(params[:id]).product_details
+  product_details.to_json
+end
+get :stores do
+   stores=SupplierAccount.find(params[:id]).stores
+   stores.to_json
+end
 end
