@@ -19,7 +19,7 @@ class Product
   field :validate_person,:type=>String                            #认证员
   field :pay_types,:type=>Array,:default=>[]                      #商品支持的支付方式
   field :tag,:type=>Array,:default=>[]
-  field :is_up_shelve,:type=>Boolean,:default=>true
+  field :is_up_shelve,:type=>Boolean,:default=>false
   field :down_shelve_time,:type=>DateTime,default: ->{Time.now+7.day}
   field :weight,:type=>Float
   field :volume,:type=>Float

@@ -41,6 +41,8 @@
                 <th class=header> <%= mat(:product_store, :product_detail_id) %></th>
                 <th class=header> <%= mat(:product_store, :store_id) %></th>
                 <th class=header> <%= mat(:product_store, :amount) %></th>
+                <th class=header> <%= mat(:product_store, :reserve) %></th>
+                <th class=header> <%= mat(:product_store, :is_up_shelve) %></th>
                 <th class="header list-row-action-header"></th>
       </tr>
     </thead>
@@ -56,6 +58,8 @@
           <td class=list-column> <%= product_store.product_detail.specification %> </td>
           <td class=list-column> <%= product_store.store.name %> </td>
           <td class=list-column> <%= product_store.amount %> </td>
+          <td class=list-column> <%= product_store.reserve %> </td>
+          <td class=list-column> <%= product_store.is_up_shelve %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:product_stores, :edit, :id => product_store.id), :rel => :tooltip, :title => "#{pat(:edit)} product_store", :class => 'list-row-action-wrapper-link' %>

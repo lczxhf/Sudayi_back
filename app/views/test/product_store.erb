@@ -1,0 +1,52 @@
+	<% content_for :head do %>
+<%= javascript_include_tag "jquery-1.8.2.min" %>
+<script type="text/javascript">
+  $(function(){
+     $(".nav-tabs li").removeClass("active");
+    $(".nav-tabs li :eq(2)").attr("class","active");
+  })
+</script>
+<% end %>
+	<div >
+		<ul class="nav nav-pills">
+		  <li role="presentation" class="active"><a href="store?id=<%=@account._id%>"><span>列表 </span></a></li>
+		  <li role="presentation"><a href="add_store?id=<%=@account._id%>"><span>添加 </span></a></li>
+		</ul>
+	</div>
+	<br>
+	<div style="background-color: #f5f5f5;border:1px  solid  #333333;">
+	  	<table class="table">
+	     <thead>
+	       <tr>
+	         <th>仓库名</th>
+	         <th>Product</th>
+	         <th>Detail</th>
+	         <th>Amount</th>
+	         <th>Price</th>
+	         <th>No_Store</th>
+	         <th>操作</th>
+	      </tr>
+	     </thead>
+	     <tbody>
+	     <% @product_stores.each_with_index do |product_store,index|%>
+	       <tr>
+	         <td><%=product_store.store.name%></td>
+	         <td><%=product_store.product_detail.product.name%></td>
+	         <td>
+	         	<%=product_store.product_detail.specification%>
+	         </td>
+	         <td><%=product_store.amount%></td>
+	         <td><%=product_store.product_detail.price%></td>
+	         <td><%=product_store.product_detail.no_store%></td>
+	         <td>
+	         	<ul class="list-inline">
+					<li><a href="">申请延期</a></li>
+				
+				</ul>
+	         </td>
+	       </tr>
+	       <%end%>
+	      
+	     </tbody>
+	    </table>
+	</div>

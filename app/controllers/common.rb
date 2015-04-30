@@ -40,9 +40,7 @@ get :code_image do
   image
 end  
 get :test do
- bills=Bill.all
 
- bills.to_json
 end
 
 end

@@ -57,6 +57,14 @@ end
 get :customer do
   render :customer,:layout=>false
 end
+get :product_store do
+
+  @account=SupplierAccount.find(params[:id])
+  @product_stores=ProductStore.where(store_id:params[:store_id])
+
+  render :product_store
+end
+
 
 
 get :product_detail do

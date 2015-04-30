@@ -56,15 +56,15 @@ SudayiBack::Mobile.controllers :welcome do
         nodes.sort_by!{|node| NodeWay.where(node_id:node,tonode:params[:node_id]).first.time}
         stores=nodes.collect do |node|
             store_address=StoreAddress.where(node_id:node).collect{|a| a._id}
-            logger.info store_address.inspect
+           
             abc=Store.in(:store_address_id=>store_address).where(is_open:true)  
-            logger.info abc.to_json
+  
             abc
         end 
         product_result=[]
         product_cache=ProductCache.new
         product_cache.node_id=params[:node_id]
-        logger.info stores.to_json
+      
         stores.each do |store|
 
             # if store.class.name=="Array"

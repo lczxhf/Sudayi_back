@@ -125,6 +125,8 @@ post :insert_product_to_store,:csrf_protection => false do
                product_store.save
                product_detail.no_store-=amount
                product_detail.save
+               product_detail.product.is_up_shelve=true
+               product_detail.product.save
           else
               "请填写真确的数量".to_json
           end

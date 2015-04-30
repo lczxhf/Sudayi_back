@@ -94,6 +94,11 @@ post :add_product_detail, :csrf_protection=>false do
     product_detail.product=product
     product_detail.save
 end
+get :present_state do
+    product=Product.find(params[:product_id])
+    product.state=State.where(code:"03").first
+    product.save
+end
 end
 
 
